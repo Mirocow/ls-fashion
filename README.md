@@ -1,8 +1,5 @@
-Forum from [LiveStreet CMS](http://livestreetcms.com/ "LiveStreet CMS")
+Fashion from [LiveStreet CMS](http://livestreetcms.com/ "LiveStreet CMS")
 =======================================================================
-
-Fashion
--------
 
 Модуль будет поддерживать неограниченное кол-во профилей с разным функционалом
 
