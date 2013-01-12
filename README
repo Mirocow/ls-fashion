@@ -1,4 +1,8 @@
-﻿===== Fashion =====
+Forum from [LiveStreet CMS](http://livestreetcms.com/ "LiveStreet CMS")
+=======================================================================
+
+Fashion
+-------
 
 Модуль будет поддерживать неограниченное кол-во профилей с разным функционалом
 Профиль состоит из
@@ -114,3 +118,7 @@ $config['Fields'] = array(
   <i class="icon-question-sign js-tip-help" title="{$profile_firstname_notice}"></i>
   <small class="validate-error-hide validate-error-field-{$profile_firstname}"></small></p>
 </code>
+
+License
+-------
+[ ![CC BY-NC](http://i.creativecommons.org/l/by-nc/3.0/88x31.png "CC BY-NC") ](http://creativecommons.org/licenses/by-nc/3.0/ "CC BY-NC")
