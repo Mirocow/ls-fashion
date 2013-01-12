@@ -98,7 +98,7 @@ Fashion from [LiveStreet CMS](http://livestreetcms.com/ "LiveStreet CMS")
 
 
 
-В дальнейшем все настройки можно будет выполнять из адмики, используя плагин Config: livestreet.ru/blog/13945.html (Платный модуль)
+В дальнейшем все настройки можно будет выполнять из адмики, используя плагин Config: livestreet.ru/blog/13945.html
 
 В шаблонах сделан задел на будущий модуль Widget (Возможность создавать виджеты простой функцией, аналог виджетов Yii Framework)
 Пример:
