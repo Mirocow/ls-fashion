@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+	<name>
+		<lang name="default">Fashion</lang>
+	</name>
+	<author>
+		<lang name="default">Mirocow</lang>
+	</author>
+	<homepage>http://mirocow.com</homepage>
+	<version>0.0.1</version>
+	<requires>
+		<livestreet>1.*</livestreet>
+		<plugins>
+		</plugins>
+	</requires>
+	<description>
+		<lang name="default"></lang>
+		<lang name="russian">Плагин позволяет создвать неограниченное кол-во профилей и полей к ним</lang>
+	</description>
+</plugin>

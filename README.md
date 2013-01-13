@@ -1,7 +1,13 @@
 Fashion from [LiveStreet CMS](http://livestreetcms.com/ "LiveStreet CMS")
 =======================================================================
 
-Модуль будет поддерживать неограниченное кол-во профилей с разным функционалом
+Описание
+--------
+
+Плагин позволяет создвать неограниченное кол-во профилей и полей к ним.
+
+Возможности
+-----------
 
 Возможности:
 * Сущность профилей
@@ -21,34 +27,38 @@ Fashion from [LiveStreet CMS](http://livestreetcms.com/ "LiveStreet CMS")
   * Валидация Entity
   * Правила валидации
   * Сохранение сущности
-* Role — роль пользователя (менеджер, админ итд)
+* Role — роль пользователя (менеджер, админ итд) // В разработке
+  * Валидация Entity
+  * Правила валидации
+  * Сохранение сущности
+* Permissions — разрешения пользователя // В разработке
   * Валидация Entity
   * Правила валидации
   * Сохранение сущности
 
-Поля:
+Field (Поля):
 * Поле: Любой тип данных
-* Поддержка поля: Конкурирование поля через файл конфигурации
+* Поддержка поля: Конфигурование поля через файл конфигурации
 * Валидация: Выполняется по правилам фреймворка
 
-Пример:
+Пример валидации:
 
     protected $aValidateRules=array(
       array('profile_firstname','required', 'isEmpty' => false, 'on'=>array('', 'registration')),
       array('profile_firstname','string', 'on'=>array('', 'registration')), // '' - означает дефолтный сценарий
-    
+
       array('profile_secondname','required', 'isEmpty' => false, 'on'=>array('', 'registration')),
       array('profile_secondname','string', 'on'=>array('', 'registration')),
-    
+
       array('profile_experience','required', 'isEmpty' => false, 'on'=>array('', 'registration')),
       array('profile_experience','string', 'on'=>array('', 'registration')),
       array('profile_experience','is_selleted', 'on'=>array('', 'registration')),
-    
+
       array('profile_gender','required', 'isEmpty' => false, 'on'=>array('', 'registration')),
       array('profile_gender','string', 'on'=>array('', 'registration')),
-      array('profile_gender','is_selleted', 'on'=>array('', 'registration')),    
+      array('profile_gender','is_selleted', 'on'=>array('', 'registration')),
     );
-    
+
     public function ValidateIsSelleted($sValue,$aParams) {
       return 'Не выбран ни один пункт';
     }
@@ -59,43 +69,60 @@ Fashion from [LiveStreet CMS](http://livestreetcms.com/ "LiveStreet CMS")
 
 Пример конфигурации:
 
-    $config['useAjax'] = FALSE;
-    
-    $config['Profiles'] = array(
-        'Модель' => 'model',
-        'Фотограф' => 'photo',
-    );
-  
-    $config['Fields'] = array(
-      'FirstName' => array(
-        'Actions' => array(),
-        'Profiles' => array('model', 'photo'),
-        'fields' => array('Имя' => 'firstname'),
-      ),
-      'SecondName' => array(
-        'Actions' => array(),
-        'Profiles' => array('model', 'photo'),
-        'fields' => array('Фамилия' => 'secondname'),
-      ),
-      'Experience' => array(
-        'Actions' => array(),
-        'Profiles' => array('model', 'photo'),
-        'fields' => array(
-          'Нет опыта' => 'NoExperience',
-          'Небольшой' => 'Small',
-          'Большой' => 'High',
-        ),
-      ),
-      'Gender' => array(
-        'Actions' => array(),
-        'Profiles' => array('model', 'photo'),
-        'fields' => array(
-          'Муж' => 'Male',
-          'Жен' => 'Female ',
-        ),
-      ),
-    );
+      $config['useAjax'] = FAlSE;
+      $config['LoginEqMail'] = TRUE;
 
+      // Список профелй
+      $config['Profiles'] = array(
+          'Модель' => 'model',
+          'Фотограф' => 'photo',
+      );
+
+      // Список полей с привязкой к профилю
+      $config['Fields'] = array(
+        'profile_firstname' => array(
+          'Actions' => array(),
+          'Profiles' => array('model', 'photo'),
+          'fields' => array('Имя' => 'firstname'),
+          'widget' => 'text', // Применяется с модулем http://livestreet.ru/blog/13956.html
+          'type' => array( ), // Настройки для поля в БД
+        ),
+        'profile_secondname' => array(
+          'Actions' => array(),
+          'Profiles' => array('model', 'photo'),
+          'fields' => array('Фамилия' => 'secondname'),
+          'widget' => 'text', // Применяется с модулем http://livestreet.ru/blog/13956.html
+          'type' => array( ), // Настройки для поля в БД
+        ),
+        'profile_experience' => array(
+          'Actions' => array(),
+          'Profiles' => array('model', 'photo'),
+          'fields' => array(
+            'Нет опыта' => 'NoExperience',
+            'Небольшой' => 'Small',
+            'Большой' => 'High',
+          ),
+          'widget' => 'combo', // Применяется с модулем http://livestreet.ru/blog/13956.html
+          'type' => array( ), // Настройки для поля в БД
+        ),
+        'profile_gender' => array(
+          'Actions' => array(),
+          'Profiles' => array('model', 'photo'),
+          'fields' => array(
+            'Муж' => 'Male',
+            'Жен' => 'Female ',
+          ),
+          'widget' => 'combo', // Применяется с модулем http://livestreet.ru/blog/13956.html
+          'type' => array( ), // Настройки для поля в БД
+        ),
+      );
+
+Установка
+---------
+
+* Переписать в папку plugins/fashion
+* Активировать плагин
+* Настроить plugins/fashion/config/config.php
 
 
 В дальнейшем все настройки можно будет выполнять из адмики, используя плагин Config: livestreet.ru/blog/13945.html
