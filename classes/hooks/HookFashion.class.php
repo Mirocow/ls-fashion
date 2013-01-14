@@ -1,28 +1,28 @@
 <?php
 /*
-  Informer plugin
-  (P) PSNet, 2008 - 2012
-  http://psnet.lookformp3.net/
-  http://livestreet.ru/profile/PSNet/
-  http://livestreetcms.com/profile/PSNet/
+  Fashion plugin
+  (P) Mirocow, 2013
+  http://mirocow.com/
+  http://livestreet.ru/blog/13927.html
 */
 
 class PluginFashion_HookFashion extends Hook {
 
+
   public function RegisterHook () {
     $this->AddHook ('init_action', 'AddStylesAndJS', __CLASS__);
+
     $this->AddHook ('registration_validate_before', '_registration_validate_before', __CLASS__);
     $this->AddHook ('registration_validate_after', '_registration_validate_after', __CLASS__);
     $this->AddHook ('registration_after', '_registration_after', __CLASS__);
     $this->AddHook ('registration_validate_field', '_registration_validate_field', __CLASS__);
 
-    //$this->AddDelegateHook('module_user_update_after','update',__CLASS__,-3);
-    //$this->AddHook('template_form_settings_profile_begin', 'settings',__CLASS__,-3);
-    //$this->AddHook('template_prof_register', 'register',__CLASS__,-3);
-    //$this->AddHook('template_profile_whois_privat_item', 'profile',__CLASS__,-3);
+    $this->AddHook('template_form_settings_profile_end', 'settings',__CLASS__,-100);
+    $this->AddHook('template_profile_whois_privat_item', 'profile',__CLASS__,-100);
   }
 
   // ---
+
 
   public function AddStylesAndJS () {
     $sTemplateWebPath = Plugin::GetTemplateWebPath (__CLASS__);
@@ -48,7 +48,7 @@ class PluginFashion_HookFashion extends Hook {
     }
     if(($aErrors = LS::getInstance()
       ->GetModuleObject('PluginFashion_ModuleProfile')
-      ->Save( $aVars, $_fields ))){
+      ->Save( $aVars, $_fields, getRequestStr( 'profile_type' ) ))){
         if(is_array($aErrors)){
           $this->Viewer_AssignAjax('aErrors', $aErrors);
           return false;
@@ -76,6 +76,25 @@ class PluginFashion_HookFashion extends Hook {
         return false;
     }
     return true;
+  }
+
+  public function settings() {
+      $oProfile = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile();
+
+      $type = $oProfile->getEntityProfile()->getType();
+
+      foreach($oProfile->getFields()->_getDataArray() as $field_name => $value){
+        $this->Viewer_Assign("{$field_name}_value",$value);
+      }
+      unset($oProfile);
+      return $this->Viewer_Fetch(Plugin::GetTemplatePath('fashion')."profile/{$type}_settings_profile.tpl");
+  }
+
+  public function profile() {
+      $oProfile = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile();
+      $type = $oProfile->getEntityProfile()->getType();
+      unset($oProfile);
+      return $this->Viewer_Fetch(Plugin::GetTemplatePath('fashion')."profile/{$type}_profile.tpl");
   }
 
 }

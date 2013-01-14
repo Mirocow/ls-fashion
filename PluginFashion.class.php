@@ -29,6 +29,7 @@ class PluginFashion extends Plugin {
       'action' => array(
       ),
       'module' => array(
+        'ModuleUser',
       ),
       'mapper' => array(
       ),

@@ -10,10 +10,13 @@ class PluginFashion_ModuleField extends ModuleORM {
 
   private $return = array();
 
-  protected $oMapper;
+  protected $_oMapper;
+  protected $_fields_config = null;
+  protected $_oEntityField;
 
   public function Init () {
     parent::Init();
+    $this->_fields_config = Config::Get('plugin.fashion.Fields');
   }
 
   public function Validate($field_name, $value = ''){
@@ -33,6 +36,59 @@ class PluginFashion_ModuleField extends ModuleORM {
 
   public function Save(PluginFashion_ModuleProfile_EntityProfile $oProfile) {
     $i = 1;
+  }
+
+  /**
+   * Вывод неподготовленных данных
+   *
+   * @param PluginFashion_ModuleField_EntityField $oField
+   */
+  public function getFieldsData(PluginFashion_ModuleField_EntityField $oField){
+    return $oField->_getData($oField);
+  }
+
+  /**
+   * Вывод обработанных данных
+   *
+   * @param PluginFashion_ModuleField_EntityField $oField
+   */
+  public function getFieldsViewsData(PluginFashion_ModuleField_EntityField $oField){
+    $aFields = $oField->_getData($oField);
+
+    foreach($aFields as $field => &$value){
+      if($field == 'id' || $field == 'profile_id')
+        continue;
+
+      $field_config = $this->GetFieldConfig($field);
+
+      switch($field_config['widget']){
+        case 'combo':
+        case 'list':
+          $value = $this->Lang_Get("plugin.fashion.{$field}_fields.{$value}");
+        break;
+        default:
+          $value = $this->Lang_Get("plugin.fashion.{$field}");
+      }
+
+    }
+
+    return $aFields;
+  }
+
+  public function GetFieldConfig($field_name){
+    return $this->_fields_config[$field_name];
+  }
+
+  public function setField(PluginFashion_ModuleField_EntityField $oField){
+    $this->_oEntityField = $oField;
+  }
+
+  public function getField(){
+    return $this;
+  }
+
+  public function getEntityField(){
+    return $this->_oEntityField;
   }
 
 }

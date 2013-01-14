@@ -14,10 +14,6 @@
  */
 class PluginFashion_ModuleProfile_MapperProfile extends MapperORM {
 
-  public static function GetTableName($oEntity) {
-    return 'prefix_profiles';
-  }
-
 	public function Add(PluginFashion_ModuleProfile_EntityProfile $oProfile) {
 		return false;
 	}

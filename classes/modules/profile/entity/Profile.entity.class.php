@@ -25,7 +25,6 @@ class PluginFashion_ModuleProfile_EntityProfile extends EntityORM {
   );
 
   public function Init() {
-    $i = 1;
   }
 
   public function ShowColumns(){

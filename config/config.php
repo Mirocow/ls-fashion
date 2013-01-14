@@ -1,4 +1,11 @@
 <?php
+/*
+  Fashion plugin
+  (P) Mirocow, 2013
+  http://mirocow.com/
+  http://livestreet.ru/blog/13927.html
+*/
+
 $config['useAjax'] = FAlSE;
 $config['LoginEqMail'] = TRUE;
 
@@ -28,9 +35,9 @@ $config['Fields'] = array(
     'Actions' => array(),
     'Profiles' => array('model', 'photo'),
     'fields' => array(
-      'Нет опыта' => 'NoExperience',
-      'Небольшой' => 'Small',
-      'Большой' => 'High',
+      'NoExperience',
+      'Small',
+      'High',
     ),
     'widget' => 'combo', // Применяется с модулем http://livestreet.ru/blog/13956.html
     'type' => array( ), // Настройки для поля в БД
@@ -39,8 +46,8 @@ $config['Fields'] = array(
     'Actions' => array(),
     'Profiles' => array('model', 'photo'),
     'fields' => array(
-      'Муж' => 'Male',
-      'Жен' => 'Female ',
+      'Male',
+      'Female',
     ),
     'widget' => 'combo', // Применяется с модулем http://livestreet.ru/blog/13956.html
     'type' => array( ), // Настройки для поля в БД
@@ -93,9 +100,22 @@ return $config;
 /*
 Заметки:
 
-{$Key|lower}
+Получить объекты:
+LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile') - модуль
+LS::Ent('PluginFashion_ModuleProfile_EntityProfile') - Сущность
+$this->oUserCurrent->GetLogin() - Текущий пользователь
+
+Конфигурация:
 Config::Get('plugin.fashion.Profiles')
-$oUser=$this->User_GetUserById($oUser->getId());
+
+Акшены/Эветы/Параметры:
+Router::GetAction()
+Router::GetActionEvent()
+Router::GetPathWebCurrent()
+Router::GetParam(array())
+
+
+Хуки:
 $this->Hook_Run('registration_validate_after', array('oUser'=>$oUser));
 
 */

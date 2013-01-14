@@ -23,6 +23,7 @@ Fashion from [LiveStreet CMS](http://livestreetcms.com/ "LiveStreet CMS")
   * Валидация Entity
   * Правила валидации
   * Сохранение сущности
+  * Сдержит ссылку на профиль
 * Profile — Профиль пользователя (покупатель, продавец итд)
   * Валидация Entity
   * Правила валидации
@@ -31,6 +32,7 @@ Fashion from [LiveStreet CMS](http://livestreetcms.com/ "LiveStreet CMS")
   * Валидация Entity
   * Правила валидации
   * Сохранение сущности
+  * Содержит список Permissions
 * Permissions — разрешения пользователя // В разработке
   * Валидация Entity
   * Правила валидации

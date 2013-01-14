@@ -21,7 +21,6 @@ class PluginFashion_ModuleField_EntityField extends EntityORM {
   );
 
   public function Init() {
-    $i = 1;
   }
 
   /**
@@ -54,5 +53,9 @@ class PluginFashion_ModuleField_EntityField extends EntityORM {
 
   public function ShowColumns(){
     return array_keys( Config::Get('plugin.fashion.Fields') );
+  }
+
+  public function getFieldsData(){
+    return $this->_getData($this);
   }
 }

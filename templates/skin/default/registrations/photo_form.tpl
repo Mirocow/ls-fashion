@@ -34,6 +34,7 @@
 
   {hook run='form_registration_end' isPopup=true}
 
+  <input type="hidden" name="profile_type" value="photo">
   <input type="hidden" name="return-path" value="{$PATH_WEB_CURRENT|escape:'html'}">
   <button type="submit" name="submit_register" class="button button-primary" id="register-{$Key}-form-submit">{$aLang.registration_submit}</button>
 </form>
