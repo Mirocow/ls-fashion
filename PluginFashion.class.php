@@ -38,13 +38,18 @@ class PluginFashion extends Plugin {
   );
 
   public function Activate () {
+    $return = false;
     if (!$this->isTableExists('prefix_profiles')) {
-      $this->ExportSQL(dirname(__FILE__).'/profiles.sql');
+      $return = $this->ExportSQL(dirname(__FILE__).'/profiles.sql');
     }
     if (!$this->isTableExists('prefix_fields')) {
-      $this->ExportSQL(dirname(__FILE__).'/fields.sql');
+      $return = $this->ExportSQL(dirname(__FILE__).'/fields.sql');
     }
-    return true;
+    return isset($return['result'])? $return['result']: false;
+  }
+
+  public function Deactivate () {
+    // TODO: Drop prefix_profiles, prefix_fields
   }
 
   // ---

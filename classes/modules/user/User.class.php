@@ -25,7 +25,7 @@ class PluginFashion_ModuleUser extends PluginFashion_Inherit_ModuleUser {
               ->GetProfilesByUserId($aUsers);
 
     if(!$aProfiles)
-      return null;
+      return $aUsers;
 
     foreach ($aUsers as $id => $oUser)
       if(isset($aProfiles[$id]))
