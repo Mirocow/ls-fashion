@@ -100,6 +100,10 @@ class PluginFashion_ModuleProfile extends ModuleORM {
     return $this->_oEntityProfile;
   }
 
+  public function isProfile(){
+    return isset($this->_oEntityProfile);
+  }
+
   public function getField(){
     return $this->_oField;
   }

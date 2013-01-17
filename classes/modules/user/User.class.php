@@ -37,6 +37,8 @@ class PluginFashion_ModuleUser extends PluginFashion_Inherit_ModuleUser {
   public function Update(ModuleUser_EntityUser $oUser) {
     parent::Update($oUser);
 
+    if(!LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile()->isProfile()) return true;
+
     $Fields = Config::Get('plugin.fashion.Fields');
     foreach($Fields as $name => $params){
       $_fields[$name] = getRequestStr( $name );

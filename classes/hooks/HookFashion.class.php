@@ -79,21 +79,26 @@ class PluginFashion_HookFashion extends Hook {
   }
 
   public function settings() {
-      $oProfile = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile();
+      if(!LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile()->isProfile()) return;
 
+      $oProfile = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile();
       $type = $oProfile->getEntityProfile()->getType();
 
       foreach($oProfile->getFields()->_getDataArray() as $field_name => $value){
         $this->Viewer_Assign("{$field_name}_value",$value);
       }
       unset($oProfile);
+
       return $this->Viewer_Fetch(Plugin::GetTemplatePath('fashion')."profile/{$type}_settings_profile.tpl");
   }
 
   public function profile() {
-      $oProfile = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile();
-      $type = $oProfile->getEntityProfile()->getType();
-      unset($oProfile);
+      if(!LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile()->isProfile()) return;
+
+      $oEntityProfile = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile()->getEntityProfile();
+      $type = $oEntityProfile->getType();
+      unset($oEntityProfile);
+
       return $this->Viewer_Fetch(Plugin::GetTemplatePath('fashion')."profile/{$type}_profile.tpl");
   }
 
