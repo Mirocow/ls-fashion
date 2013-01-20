@@ -8,11 +8,18 @@
 
 $config['useAjax'] = FAlSE;
 $config['LoginEqMail'] = TRUE;
+$config['DefaultProfile'] = 'photo';
 
 // Список профелй
 $config['Profiles'] = array(
-    'Модель' => 'model',
-    'Фотограф' => 'photo',
+    'Модели' => 'model',
+    'Фотографы' => 'photo',
+    'Стилисты/Визажисты' => 'stylist',
+    'Музыканты' => 'musician',
+    'Певцы' => 'singer',
+    'Актеры' => 'actor',
+    'Кастинг директоры' => 'casting',
+    'Скауты/Агенты' => 'agent',
 );
 
 // Список полей с привязкой к профилю
@@ -104,6 +111,7 @@ return $config;
 LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile') - модуль
 LS::Ent('PluginFashion_ModuleProfile_EntityProfile') - Сущность
 $this->oUserCurrent->GetLogin() - Текущий пользователь
+LS::CurUsr()  - Текущий пользователь
 
 Конфигурация:
 Config::Get('plugin.fashion.Profiles')

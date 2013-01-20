@@ -79,27 +79,43 @@ class PluginFashion_HookFashion extends Hook {
   }
 
   public function settings() {
-      if(!LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile()->isProfile()) return;
+      //if(!LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile()->isProfile()) return;
+      //$oProfile = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile();
 
-      $oProfile = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile();
+      $oProfile = LS::CurUsr()->getProfile();
+
+      if(get_class($oProfile) != 'PluginFashion_ModuleProfile' || !$oProfile->isProfile()) return;
+
       $type = $oProfile->getEntityProfile()->getType();
 
-      foreach($oProfile->getFields()->_getDataArray() as $field_name => $value){
+      if(!$oProfile->getFieldsArray()) return;
+
+      foreach($oProfile->getFieldsArray() as $field_name => $value){
         $this->Viewer_Assign("{$field_name}_value",$value);
       }
+
+      $path = $oProfile->getProfileTemplate($type, 'profile_settings');
+
       unset($oProfile);
 
-      return $this->Viewer_Fetch(Plugin::GetTemplatePath('fashion')."profile/{$type}_settings_profile.tpl");
+      return $this->Viewer_Fetch($path);
   }
 
   public function profile() {
-      if(!LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile()->isProfile()) return;
+      //if(!LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile()->isProfile()) return;
+      //$oProfile = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile();
 
-      $oEntityProfile = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile()->getEntityProfile();
+      $oProfile = LS::CurUsr()->getProfile();
+
+      if(get_class($oProfile) != 'PluginFashion_ModuleProfile' || !$oProfile->isProfile()) return;
+
+      $oEntityProfile = $oProfile->getEntityProfile();
       $type = $oEntityProfile->getType();
       unset($oEntityProfile);
 
-      return $this->Viewer_Fetch(Plugin::GetTemplatePath('fashion')."profile/{$type}_profile.tpl");
+      $path = $oProfile->getProfileTemplate($type, 'profile');
+
+      return $this->Viewer_Fetch($path);
   }
 
 }

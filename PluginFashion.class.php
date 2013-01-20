@@ -29,11 +29,12 @@ class PluginFashion extends Plugin {
       'action' => array(
       ),
       'module' => array(
-        'ModuleUser',
+        'ModuleUser' => '_ModuleUser',
       ),
       'mapper' => array(
       ),
       'entity' => array(
+        'ModuleUser_EntityUser' => '_ModuleUser_EntityUser',
       ),
   );
 
@@ -58,4 +59,3 @@ class PluginFashion extends Plugin {
 
 }
 
-?>

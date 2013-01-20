@@ -9,13 +9,12 @@
 class PluginFashion_ModuleProfile extends ModuleORM {
 
   protected $_oMapper;
-  protected $_oUserCurrent;
+  //protected $_oUserCurrent;
   protected $_oEntityProfile;
   protected $_oField;
 
   public function Init () {
     parent::Init();
-    $this->_oField = LS::getInstance()->GetModuleObject('PluginFashion_ModuleField')->getField();
   }
 
   public function Save($aVars = array(), $fields = array(), $type = '') {
@@ -105,28 +104,50 @@ class PluginFashion_ModuleProfile extends ModuleORM {
   }
 
   public function getField(){
+    if($this->_oField) return $this->_oField;
+    $this->_oField = LS::getInstance()
+      ->GetModuleObject('PluginFashion_ModuleField')
+        ->getField( $this->_oEntityProfile->getId() );
     return $this->_oField;
   }
 
   public function getFields(){
+    return $this->getField()->getFields();
+  }
 
-    $oEntityField = $this->getField()
-                      ->GetByFilter(
-                        array('profile_id' => $this->_oEntityProfile->getId() ),
-                              'PluginFashion_ModuleField_EntityField'
-                      );
-
-    if(!isset($oEntityField)) return null;
-
-    $this->_oField->setField( $oEntityField );
-
-    return $this->_oField->getEntityField();
+  public function getFieldsLabels(){
+    $fields = $this->getFields();
+    if($fields)
+      return $this->getField()->getFieldsLabels($fields);
   }
 
   public function getFieldsViewsData(){
-    $fields = $this->getFields();
-    if($fields)
-      return $this->_oField->getFieldsViewsData($fields);
+    $oFields = $this->getFields();
+    if($oFields)
+      return $this->getField()->getFieldsViewsData($oFields);
+  }
+
+  public function getFieldsArray(){
+    $oFields = $this->getFields();
+    if($oFields)
+      return $oFields->_getDataArray();
+  }
+
+  public function getProfileTemplate($profile, $type = 'registrations'){
+    $sTemplatePathPlugin = Plugin::GetTemplatePath('fashion');
+    $path = $sTemplatePathPlugin . $type . '/'.$profile.'.tpl';
+    if(!file_exists($path))
+      $path = $sTemplatePathPlugin . $type . '/'.Config::Get('plugin.fashion.DefaultProfile').'.tpl';
+    return $path;
+  }
+
+  public function __get($name){
+    if($oEntityField = $this->getField()->getEntityField())
+      return $oEntityField->$name();
+  }
+
+  public function __set($name, $value){
+    $i = 1;
   }
 
 }

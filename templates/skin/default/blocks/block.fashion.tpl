@@ -4,6 +4,7 @@
   <section class="block">
     <header class="block-header">
       <h3>Регистрация</h3>
+      {*<a href="{router page='login'}">{$aLang.user_login_submit}</a>*}
     </header>
     <div class="block-content">
       <div class="js-block-profile-content" data-type="all">
@@ -52,8 +53,9 @@
         {foreach from=$oConfig->get('plugin.fashion.Profiles') item=Key key=Name}
           <div class="tab-content js-block-popup-register-content" data-type="register_{$Key}" style="display:none;">
             {hook run='fashion_register_begin' isPopup=true}
-              {assign var="sTemplatePathPlugin" value=$aTemplatePathPlugin.fashion}
-              {include file="$sTemplatePathPlugin/registrations/`$Key`_form.tpl" Key=$Key useAjax=$useAjax}
+              {if $sTemplatePathPlugin = $LS->GetModuleObject('PluginFashion_ModuleProfile')->getProfileTemplate($Key, 'registrations')}
+                {include file="$sTemplatePathPlugin" Key=$Key useAjax=$useAjax}
+              {/if}
             {hook run='fashion_register_end' isPopup=true}
           </div>
         {/foreach}

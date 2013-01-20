@@ -13,10 +13,27 @@ class PluginFashion_ModuleField extends ModuleORM {
   protected $_oMapper;
   protected $_fields_config = null;
   protected $_oEntityField;
+  protected $_ProfileId = 0;
 
   public function Init () {
     parent::Init();
     $this->_fields_config = Config::Get('plugin.fashion.Fields');
+  }
+
+  public function getFields(){
+
+    if($this->getEntityField()) return $this->getEntityField();
+
+    $oEntityField = $this->GetByFilter(
+                        array('profile_id' => $this->_ProfileId ),
+                              'PluginFashion_ModuleField_EntityField'
+                      );
+
+    if(!isset($oEntityField)) return null;
+
+    $this->setField( $oEntityField );
+
+    return $this->getEntityField();
   }
 
   public function Validate($field_name, $value = ''){
@@ -52,7 +69,7 @@ class PluginFashion_ModuleField extends ModuleORM {
    *
    * @param PluginFashion_ModuleField_EntityField $oField
    */
-  public function getFieldsViewsData(PluginFashion_ModuleField_EntityField $oField){
+  public function getFieldsLabels(PluginFashion_ModuleField_EntityField $oField){
     $aFields = $oField->_getData($oField);
 
     foreach($aFields as $field => &$value){
@@ -75,6 +92,10 @@ class PluginFashion_ModuleField extends ModuleORM {
     return $aFields;
   }
 
+  public function getFieldsViewsData(PluginFashion_ModuleField_EntityField $oField){
+    return $oField->_getData($oField);
+  }
+
   public function GetFieldConfig($field_name){
     return $this->_fields_config[$field_name];
   }
@@ -83,7 +104,9 @@ class PluginFashion_ModuleField extends ModuleORM {
     $this->_oEntityField = $oField;
   }
 
-  public function getField(){
+  public function getField($profile_id){
+    $this->_ProfileId = $profile_id;
+    $this->getFields();
     return $this;
   }
 

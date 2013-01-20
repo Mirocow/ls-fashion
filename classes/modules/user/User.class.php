@@ -56,5 +56,4 @@ class PluginFashion_ModuleUser extends PluginFashion_Inherit_ModuleUser {
 
   }
 
-
 }

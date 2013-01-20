@@ -8,6 +8,17 @@
 return array(
   'title' => 'Расширенный профиль',
 
+  'profile_names' => array(
+    'model' => 'Модель',
+    'photo' => 'Фотограф',
+    'stylist' => 'Стилист/Визажист',
+    'musician' => 'Музыкант',
+    'singer' => 'Певец',
+    'actor' => 'Актер',
+    'casting' => 'Кастинг директор',
+    'agent' => 'Агент',
+  ),
+
   'profile_firstname' => 'Ваше имя',
   'profile_firstname_notice' => 'Указывайте ваше реальное имя, работодатель будет искать по ней',
   'profile_firstname_error_used' => 'Поле с именем должно быть заполнено',

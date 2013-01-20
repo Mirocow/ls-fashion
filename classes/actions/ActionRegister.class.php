@@ -25,7 +25,8 @@ class PluginFashion_ActionRegister extends ActionPlugin {
       $this->Viewer_Assign('header', TRUE);
       $this->Viewer_Assign('footer', TRUE);
       $this->Viewer_Assign('Key', $profile);
-      $this->SetTemplate(Plugin::GetTemplatePath('fashion') . "registrations/{$profile}_form.tpl");
+      $path = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfileTemplate($profile);
+      $this->SetTemplate($path);
     }
   }
 
