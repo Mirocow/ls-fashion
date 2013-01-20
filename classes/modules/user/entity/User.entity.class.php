@@ -13,19 +13,17 @@ class PluginFashion_ModuleUser_EntityUser extends PluginFashion_Inherit_ModuleUs
   }
 
   public function getProfileName(){
-    //$oUserCurrent = $this->User_GetUserCurrent();
-    //$oUserCurrent = LS::getInstance()->GetModuleObject('ModuleUser')->GetUserCurrent();
-    //$oUserCurrent = LS::E()->GetModuleObject('ModuleUser')->GetUserCurrent();
-    //$oUserCurrent = LS::CurUsr();
 
-    $oProfile = LS::CurUsr()->getProfile();
+    $oProfile = $this->_getDataOne('profile');
 
-    if(get_class($oProfile) != 'PluginFashion_ModuleProfile' || !$oProfile->isProfile()) parent::getProfileName();
+    if(!$oProfile || get_class($oProfile) != 'PluginFashion_ModuleProfile' ) parent::getProfileName();
 
-    $profile_firstname = $oProfile->getProfileFirstname;
-    $profile_secondname = $oProfile->getProfileSecondname;
+    if($oProfile->getProfileFirstname && $oProfile->getProfileSecondname)
+      $profile_name = $oProfile->getProfileFirstname . ' ' . $oProfile->getProfileSecondname;
+    else
+      $profile_name = parent::getProfileName();
 
-    return "$profile_firstname $profile_secondname";
+    return $profile_name;
   }
 
 }

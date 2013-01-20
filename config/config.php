@@ -107,16 +107,31 @@ return $config;
 /*
 Заметки:
 
-Получить объекты:
+//
+// Получить объекты
+//
 LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile') - модуль
 LS::Ent('PluginFashion_ModuleProfile_EntityProfile') - Сущность
-$this->oUserCurrent->GetLogin() - Текущий пользователь
-LS::CurUsr()  - Текущий пользователь
 
-Конфигурация:
+//
+// Текущий пользователь
+//
+$oUserCurrent = $this->User_GetUserCurrent();
+$oUserCurrent = LS::getInstance()->GetModuleObject('ModuleUser')->GetUserCurrent();
+$oUserCurrent = LS::E()->GetModuleObject('ModuleUser')->GetUserCurrent();
+$oUserCurrent = LS::CurUsr();
+
+// Профиль пользователя
+$this->oUserProfile->getId();
+
+//
+// Конфигурация
+//
 Config::Get('plugin.fashion.Profiles')
 
-Акшены/Эветы/Параметры:
+//
+// Акшены/Эветы/Параметры:
+//
 Router::GetAction()
 Router::GetActionEvent()
 Router::GetPathWebCurrent()

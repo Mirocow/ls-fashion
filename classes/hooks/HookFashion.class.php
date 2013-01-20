@@ -71,18 +71,20 @@ class PluginFashion_HookFashion extends Hook {
     // $this->PluginFashion_ModuleField_Validate($aVars['aField']['field'])
     if(($aErrors = LS::getInstance()
       ->GetModuleObject('PluginFashion_ModuleField')
-      ->Validate($aVars['aField']['field'], $aVars['aField']['value']))){
-        $this->Viewer_AssignAjax('aErrors', $aErrors);
-        return false;
+        ->Validate($aVars['aField']['field'], $aVars['aField']['value']))){
+          $this->Viewer_AssignAjax('aErrors', $aErrors);
+          return false;
     }
     return true;
   }
 
   public function settings() {
-      //if(!LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile()->isProfile()) return;
-      //$oProfile = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile();
+      $oUserCurrent = LS::CurUsr();
 
-      $oProfile = LS::CurUsr()->getProfile();
+      if(!$oUserCurrent)
+        return;
+
+      $oProfile = $oUserCurrent->getProfile();
 
       if(get_class($oProfile) != 'PluginFashion_ModuleProfile' || !$oProfile->isProfile()) return;
 
@@ -102,10 +104,12 @@ class PluginFashion_HookFashion extends Hook {
   }
 
   public function profile() {
-      //if(!LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile()->isProfile()) return;
-      //$oProfile = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile();
+      $oUserCurrent = LS::CurUsr();
 
-      $oProfile = LS::CurUsr()->getProfile();
+      if(!$oUserCurrent)
+        return;
+
+      $oProfile = $oUserCurrent->getProfile();
 
       if(get_class($oProfile) != 'PluginFashion_ModuleProfile' || !$oProfile->isProfile()) return;
 

@@ -20,9 +20,9 @@ class PluginFashion_ModuleUser extends PluginFashion_Inherit_ModuleUser {
 
     $aUsers = parent::GetUsersAdditionalData($aUserId,$aAllowData);
 
-    $aProfiles=LS::getInstance()
-              ->GetModuleObject('PluginFashion_ModuleProfile')
-              ->GetProfilesByUserId($aUsers);
+    $aProfiles = LS::getInstance()
+                  ->GetModuleObject('PluginFashion_ModuleProfile')
+                    ->GetProfilesByUserId($aUsers);
 
     if(!$aProfiles)
       return $aUsers;
@@ -45,7 +45,7 @@ class PluginFashion_ModuleUser extends PluginFashion_Inherit_ModuleUser {
         $_fields[$name] = $request;
     }
 
-    if(!isset($_fields)) return false;
+    if(!isset($_fields)) return true;
 
     return $oUser
       ->getProfile()
