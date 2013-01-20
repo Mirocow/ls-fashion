@@ -41,7 +41,8 @@ class PluginFashion_ModuleUser extends PluginFashion_Inherit_ModuleUser {
 
     $Fields = Config::Get('plugin.fashion.Fields');
     foreach($Fields as $name => $params){
-      $_fields[$name] = getRequestStr( $name );
+      if($request = getRequestStr( $name ))
+        $_fields[$name] = $request;
     }
 
     if(!isset($_fields)) return false;

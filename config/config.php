@@ -122,7 +122,6 @@ Router::GetActionEvent()
 Router::GetPathWebCurrent()
 Router::GetParam(array())
 
-
 Хуки:
 $this->Hook_Run('registration_validate_after', array('oUser'=>$oUser));
 

@@ -40,7 +40,8 @@ class PluginFashion_ModuleProfile extends ModuleORM {
       if(isset($aVars['Update'])){
         $oEntityField->_SetIsNew(FALSE);
         $oEntityFieldOld = $oProfileOld->getFields();
-        $oEntityField->setId( $oEntityFieldOld->getId() );
+        if($oEntityFieldOld)
+          $oEntityField->setId( $oEntityFieldOld->getId() );
       }
 
       $oEntityField->_setValidateScenario('registration');
