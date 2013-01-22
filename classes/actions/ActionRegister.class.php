@@ -24,7 +24,7 @@ class PluginFashion_ActionRegister extends ActionPlugin {
       $profile = $this->GetEventMatch(0);
       $this->Viewer_Assign('header', TRUE);
       $this->Viewer_Assign('footer', TRUE);
-      $this->Viewer_Assign('Key', $profile);
+      $this->Viewer_Assign('ProfileName', $profile);
       $path = LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfileTemplate($profile);
       $this->SetTemplate($path);
     }

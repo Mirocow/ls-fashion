@@ -22,8 +22,6 @@ class PluginFashion_ModuleField extends ModuleORM {
 
   public function getFields(){
 
-    if($this->getEntityField()) return $this->getEntityField();
-
     $oEntityField = $this->GetByFilter(
                         array('profile_id' => $this->_ProfileId ),
                               'PluginFashion_ModuleField_EntityField'
@@ -44,6 +42,13 @@ class PluginFashion_ModuleField extends ModuleORM {
         return false;
       $function = 'set' . func_camelize($field_name);
       call_user_func_array(array($oField,$function), array($value));
+      // Получаем профиль по обратному адресу
+      if (isset($_SERVER['HTTP_REFERER'])) {
+        $aUrl=explode('/',parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH));
+        if(count($aUrl) == 3)
+          // Сценарий в зависимости от профиля
+          $oField->_setValidateScenario('registration_' . $aUrl[2]);
+      }
       if(!$oField->_Validate(array($field_name),false)){
         return $oField->_getValidateErrors();
       }

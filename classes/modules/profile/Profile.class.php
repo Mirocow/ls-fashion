@@ -12,6 +12,7 @@ class PluginFashion_ModuleProfile extends ModuleORM {
   //protected $_oUserCurrent;
   protected $_oEntityProfile;
   protected $_oField;
+  protected $_UserId;
 
   public function Init () {
     parent::Init();
@@ -27,7 +28,10 @@ class PluginFashion_ModuleProfile extends ModuleORM {
     }
 
     $_oEntityProfile->setUserId( $aVars['oUser']->getUserId() ); // $this->_oUserCurrent
-    $_oEntityProfile->_setValidateScenario('registration');
+
+    // Сценарий в зависимости от профиля
+    $_oEntityProfile->_setValidateScenario('registration_' . $type);
+
     $_oEntityProfile->setType( $type );
 
     if(!$_oEntityProfile->_Validate(null,false)){
@@ -44,7 +48,9 @@ class PluginFashion_ModuleProfile extends ModuleORM {
           $oEntityField->setId( $oEntityFieldOld->getId() );
       }
 
-      $oEntityField->_setValidateScenario('registration');
+      // Сценарий в зависимости от профиля
+      $oEntityField->_setValidateScenario('registration_' . $type);
+
       $oEntityField->setProfileId( $_oEntityProfile->getId() );
       foreach($fields as $field => $value){
         $function = 'set' . func_camelize($field);
@@ -66,13 +72,15 @@ class PluginFashion_ModuleProfile extends ModuleORM {
     }
   }
 
-  public function GetProfileByUserId($aUserId){
-    if($this->$_oEntityProfile) return $this->$_oEntityProfile;
-    $this->$_oEntityProfile = $this->GetProfilesByUserId(array($aUserId));
+  /*protected function GetProfileByUserId($aUserId){
+    if($this->_oEntityProfile) return $this->_oEntityProfile;
+
+    if($oEntityProfile = $this->GetProfilesByUserId(array($aUserId => $aUserId)) )
+      $this->_oEntityProfile = reset($oEntityProfile);
   }
 
-  public function GetProfilesByUserId($aUserId, $limit = 0){
-    $aProfiles=LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')
+  protected function GetProfilesByUserId($aUserId, $limit = 0){
+    $aProfiles=$this->getProfile()
                 ->GetItemsByFilter(
                   array('user_id IN'=>array_keys($aUserId), '#index-from' => 'user_id'),
                         'PluginFashion_ModuleProfile_EntityProfile'
@@ -86,29 +94,61 @@ class PluginFashion_ModuleProfile extends ModuleORM {
     }
 
     return $modules;
+  }*/
+
+  protected function GetEntityProfileByUserId( $iUserId ){
+    $aProfiles=$this->getProfile()
+                ->GetItemsByFilter(
+                  array('user_id IN'=>array($iUserId), '#index-from' => 'user_id'),
+                        'PluginFashion_ModuleProfile_EntityProfile'
+                );
+    if(!$aProfiles)
+      return false;
+
+    $this->_oEntityProfile = reset($aProfiles);
   }
 
   public function setProfile(PluginFashion_ModuleProfile_EntityProfile $oProfile){
     $this->_oEntityProfile = $oProfile;
   }
 
-  public function getProfile(){
-    return $this;
+  public function getProfile( $iUserId = 0 ){
+    if(!$iUserId)
+        return $this;
+    $this->_UserId = $iUserId;
+    return clone $this;
   }
 
   public function getEntityProfile(){
+
+    if(!$this->_oEntityProfile)
+      $this->GetEntityProfileByUserId( $this->_UserId );
+
+    if(!$this->_oEntityProfile)
+      return false;
+
     return $this->_oEntityProfile;
   }
 
-  public function isProfile(){
-    return isset($this->_oEntityProfile);
+  public function getType(){
+    if($oEntityProfile = $this->getEntityProfile())
+      return $oEntityProfile->getType();
   }
 
   public function getField(){
     if($this->_oField) return $this->_oField;
-    $this->_oField = LS::getInstance()
-      ->GetModuleObject('PluginFashion_ModuleField')
-        ->getField( $this->_oEntityProfile->getId() );
+
+    if(!$this->_oEntityProfile)
+      $this->GetEntityProfileByUserId( $this->_UserId );
+
+    if(!$this->_oEntityProfile)
+      return false;
+
+    if($iProfileId = $this->_oEntityProfile->getId())
+      $this->_oField = LS::getInstance()
+        ->GetModuleObject('PluginFashion_ModuleField')
+          ->getField( $iProfileId );
+
     return $this->_oField;
   }
 
@@ -138,13 +178,15 @@ class PluginFashion_ModuleProfile extends ModuleORM {
     $sTemplatePathPlugin = Plugin::GetTemplatePath('fashion');
     $path = $sTemplatePathPlugin . $type . '/'.$profile.'.tpl';
     if(!file_exists($path))
-      $path = $sTemplatePathPlugin . $type . '/'.Config::Get('plugin.fashion.DefaultProfile').'.tpl';
+      $path = $sTemplatePathPlugin . $type . '/default.tpl';
     return $path;
   }
 
   public function __get($name){
-    if($oEntityField = $this->getField()->getEntityField())
-      return $oEntityField->$name();
+    if($oField = $this->getField())
+      if($oEntityField = $oField->getEntityField())
+        return $oEntityField->$name();
+    return false;
   }
 
   public function __set($name, $value){

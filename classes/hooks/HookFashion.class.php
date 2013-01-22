@@ -18,7 +18,7 @@ class PluginFashion_HookFashion extends Hook {
     $this->AddHook ('registration_validate_field', '_registration_validate_field', __CLASS__);
 
     $this->AddHook('template_form_settings_profile_end', 'settings',__CLASS__,-100);
-    $this->AddHook('template_profile_whois_privat_item', 'profile',__CLASS__,-100);
+    $this->AddHook('template_profile_whois_item_after_privat', 'profile', __CLASS__,-100);
   }
 
   // ---
@@ -30,25 +30,25 @@ class PluginFashion_HookFashion extends Hook {
     $this->Viewer_AppendScript ($sTemplateWebPath . 'js/script.js');
   }
 
-  public function _registration_validate_before(&$aVars = array()){
+  public function _registration_validate_before(&$aData = array()){
     if( Config::Get('plugin.fashion.LoginEqMail') ){
       Config::Set('module.user.login.charset', Config::Get('module.user.login.charset') . '@\.');
-      $aVars['oUser']->setUserLogin( $aVars['oUser']->getUserMail() );
+      $aData['oUser']->setUserLogin( $aData['oUser']->getUserMail() );
     }
   }
 
-  public function _registration_validate_after($aVars = array()){
+  public function _registration_validate_after($aData = array()){
     $i = 1;
   }
 
-  public function _registration_after($aVars = array()){
+  public function _registration_after($aData = array()){
     $Fields = Config::Get('plugin.fashion.Fields');
     foreach($Fields as $name => $params){
       $_fields[$name] = getRequestStr( $name );
     }
     if(($aErrors = LS::getInstance()
       ->GetModuleObject('PluginFashion_ModuleProfile')
-      ->Save( $aVars, $_fields, getRequestStr( 'profile_type' ) ))){
+      ->Save( $aData, $_fields, getRequestStr( 'profile_type' ) ))){
         if(is_array($aErrors)){
           $this->Viewer_AssignAjax('aErrors', $aErrors);
           return false;
@@ -61,24 +61,24 @@ class PluginFashion_HookFashion extends Hook {
    * Валидация полей профиля
    * Сценарий: registration
    *
-   * @param mixed $aVars
+   * @param mixed $aData
    */
-  public function _registration_validate_field($aVars = array()){
+  public function _registration_validate_field($aData = array()){
     $aPlugins=$this->Plugin_GetList();
     if (!(isset($aPlugins['fashion']))) {
       return true;
     }
-    // $this->PluginFashion_ModuleField_Validate($aVars['aField']['field'])
+    // $this->PluginFashion_ModuleField_Validate($aData['aField']['field'])
     if(($aErrors = LS::getInstance()
       ->GetModuleObject('PluginFashion_ModuleField')
-        ->Validate($aVars['aField']['field'], $aVars['aField']['value']))){
+        ->Validate($aData['aField']['field'], $aData['aField']['value']))){
           $this->Viewer_AssignAjax('aErrors', $aErrors);
           return false;
     }
     return true;
   }
 
-  public function settings() {
+  public function settings($aData) {
       $oUserCurrent = LS::CurUsr();
 
       if(!$oUserCurrent)
@@ -86,9 +86,9 @@ class PluginFashion_HookFashion extends Hook {
 
       $oProfile = $oUserCurrent->getProfile();
 
-      if(get_class($oProfile) != 'PluginFashion_ModuleProfile' || !$oProfile->isProfile()) return;
+      if(get_class($oProfile) != 'PluginFashion_ModuleProfile') return;
 
-      $type = $oProfile->getEntityProfile()->getType();
+      $type = $oProfile->getType();
 
       if(!$oProfile->getFieldsArray()) return;
 
@@ -103,19 +103,20 @@ class PluginFashion_HookFashion extends Hook {
       return $this->Viewer_Fetch($path);
   }
 
-  public function profile() {
-      $oUserCurrent = LS::CurUsr();
+  public function profile($aData) {
 
-      if(!$oUserCurrent)
+      if(!isset($aData['oUserProfile'])) return;
+
+      $oProfile = $aData['oUserProfile']->getProfile();
+
+      if(get_class($oProfile) != 'PluginFashion_ModuleProfile') return;
+
+      $type = $oProfile->getType();
+
+      if(!$type)
         return;
 
-      $oProfile = $oUserCurrent->getProfile();
-
-      if(get_class($oProfile) != 'PluginFashion_ModuleProfile' || !$oProfile->isProfile()) return;
-
-      $oEntityProfile = $oProfile->getEntityProfile();
-      $type = $oEntityProfile->getType();
-      unset($oEntityProfile);
+      $this->Viewer_Assign('aFieldsViewsData', $oProfile->getFieldsViewsData());
 
       $path = $oProfile->getProfileTemplate($type, 'profile');
 

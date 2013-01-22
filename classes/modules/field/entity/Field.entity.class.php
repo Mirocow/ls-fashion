@@ -20,30 +20,33 @@ class PluginFashion_ModuleField_EntityField extends EntityORM {
 
   );
 
-  public function Init() {
-  }
-
   /**
    * Определяем правила валидации
    * Стандартные правила валидации: http://docs.mirocow.com/doku.php?id=livestreet:description:entity
    *
    * @var array
    */
-  protected $aValidateRules=array(
-    array('profile_firstname','required', 'isEmpty' => false, 'on'=>array('', 'registration')),
-    array('profile_firstname','string', 'on'=>array('', 'registration')), // '' - означает дефолтный сценарий
+  protected $aValidateRules=array( );
 
-    array('profile_secondname','required', 'isEmpty' => false, 'on'=>array('', 'registration')),
-    array('profile_secondname','string', 'on'=>array('', 'registration')),
-
-    array('profile_experience','required', 'isEmpty' => false, 'on'=>array('', 'registration')),
-    array('profile_experience','string', 'on'=>array('', 'registration')),
-    array('profile_experience','is_selected', 'on'=>array('', 'registration')),
-
-    array('profile_gender','required', 'isEmpty' => false, 'on'=>array('', 'registration')),
-    array('profile_gender','string', 'on'=>array('', 'registration')),
-    array('profile_gender','is_selected', 'on'=>array('', 'registration')),
-  );
+  public function Init() {
+    //
+    // Правила обработки полей назначаются в config.php
+    //
+    $Profiles = Config::Get('plugin.fashion.Profiles');
+    $Fields = Config::Get('plugin.fashion.Fields');
+    foreach($Profiles as $Profile)
+      foreach($Fields as $field_name => $Field)
+        if(isset($Field['aValidateRules']))
+          foreach($Field['aValidateRules'] as $validateRule){
+            array_unshift($validateRule, $field_name);
+            $this->aValidateRules[] = $validateRule;
+          }
+     //
+     // Если необходимо ввести дополнительные проверки, то они должны быть по правилу
+     // on => [имя_правила]_[имя_профиля]
+     //
+     $this->aValidateRules[] = array('id', 'required', 'isEmpty' => false, 'on'=>array('', 'registration'));
+  }
 
   public function ValidateIsSelected($sValue,$aParams) {
     if(!$sValue)

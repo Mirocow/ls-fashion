@@ -28,7 +28,7 @@ return array(
   'profile_secondname_error_used' => 'Поле с фамилией должно быть заполнено',
 
   'profile_experience' => 'Опыт работы',
-  'profile_experience_notice' => '',
+  'profile_experience_notice' => 'Опыт работы',
   'profile_experience_error_used' => '',
   'profile_experience_fields' => array(
     'NoExperience' => 'Нет опыта',
@@ -37,12 +37,41 @@ return array(
    ),
 
   'profile_gender' => 'Пол',
-  'profile_gender_notice' => '',
+  'profile_gender_notice' => 'Пол',
   'profile_gender_error_used' => '',
   'profile_gender_fields' => array(
     'Male' => 'Муж',
     'Female' => 'Жен',
    ),
+
+  'profile_chest' => 'Грудь',
+  'profile_chest_notice' => 'Размер груди',
+  'profile_chest_error_used' => 'Размер груди должен быть указан',
+
+  'profile_waist' => 'Талия',
+  'profile_waist_notice' => 'Размер талии',
+  'profile_waist_error_used' => 'Размер талии должен быть указан',
+
+  'profile_hips' => 'Бедра',
+  'profile_hips_notice' => 'Размер бедер',
+  'profile_hips_error_used' => 'Размер бедер должен быть указан',
+
+  'profile_growth' => 'Рост',
+  'profile_growth_notice' => 'Рост',
+  'profile_growth_error_used' => 'Рост должен быть указан',
+
+  'profile_weight' => 'Вес',
+  'profile_weight_notice' => 'Вес',
+  'profile_weight_error_used' => 'Вес должен быть указан',
+
+  'profile_haircolor' => 'Цвет волос',
+  'profile_haircolor_notice' => 'Цвет волос',
+  'profile_haircolor_error_used' => 'Цвет волос должен быть указан',
+
+  'profile_eyes' => 'Цвет глаз',
+  'profile_eyes_notice' => 'Цвет глаз',
+  'profile_eyes_error_used' => 'Цвет глаз должен быть указан',
+
 );
 
 ?>

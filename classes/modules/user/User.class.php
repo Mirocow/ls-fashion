@@ -20,24 +20,19 @@ class PluginFashion_ModuleUser extends PluginFashion_Inherit_ModuleUser {
 
     $aUsers = parent::GetUsersAdditionalData($aUserId,$aAllowData);
 
-    $aProfiles = LS::getInstance()
+    // Приклеиваем профиль к объекту User
+    foreach ($aUsers as $id => $oUser){
+      $profile = LS::getInstance()
                   ->GetModuleObject('PluginFashion_ModuleProfile')
-                    ->GetProfilesByUserId($aUsers);
-
-    if(!$aProfiles)
-      return $aUsers;
-
-    foreach ($aUsers as $id => $oUser)
-      if(isset($aProfiles[$id]))
-        $oUser->setProfile( $aProfiles[$id] );
+                  ->getProfile( $oUser->getId() );
+      $oUser->setProfile( $profile );
+    }
 
 		return $aUsers;
 	}
 
   public function Update(ModuleUser_EntityUser $oUser) {
     parent::Update($oUser);
-
-    if(!LS::getInstance()->GetModuleObject('PluginFashion_ModuleProfile')->getProfile()->isProfile()) return true;
 
     $Fields = Config::Get('plugin.fashion.Fields');
     foreach($Fields as $name => $params){
@@ -52,7 +47,7 @@ class PluginFashion_ModuleUser extends PluginFashion_Inherit_ModuleUser {
         ->Save(
           array('oUser' => $oUser, 'Update' => TRUE),
           $_fields,
-          $oUser->getProfile()->getEntityProfile()->getType()
+          $oUser->getProfile()->getType()
         );
 
   }
