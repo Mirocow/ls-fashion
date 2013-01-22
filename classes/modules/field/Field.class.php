@@ -112,6 +112,8 @@ class PluginFashion_ModuleField extends ModuleORM {
           $t = $this->Lang_Get("plugin.fashion.{$field}_fields.{$value}");
           if($t == "NOT_FOUND_LANG_TEXT")
             $t = $field_config['fields'][$value];
+          if(!$t)
+            $t = $value;
           $value = $t;
         break;
       }
