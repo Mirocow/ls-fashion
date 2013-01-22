@@ -98,7 +98,27 @@ class PluginFashion_ModuleField extends ModuleORM {
   }
 
   public function getFieldsViewsData(PluginFashion_ModuleField_EntityField $oField){
-    return $oField->_getData($oField);
+    $aFields = $oField->_getData($oField);
+
+    foreach($aFields as $field => &$value){
+      if($field == 'id' || $field == 'profile_id')
+        continue;
+
+      $field_config = $this->GetFieldConfig($field);
+
+      switch($field_config['widget']){
+        case 'combo':
+        case 'list':
+          $t = $this->Lang_Get("plugin.fashion.{$field}_fields.{$value}");
+          if($t == "NOT_FOUND_LANG_TEXT")
+            $t = $field_config['fields'][$value];
+          $value = $t;
+        break;
+      }
+
+    }
+
+    return $aFields;
   }
 
   public function GetFieldConfig($field_name){

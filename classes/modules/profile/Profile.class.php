@@ -184,8 +184,10 @@ class PluginFashion_ModuleProfile extends ModuleORM {
 
   public function __get($name){
     if($oField = $this->getField())
-      if($oEntityField = $oField->getEntityField())
+      if($oEntityField = $oField->getEntityField()){
+        $name = 'get'.func_camelize($name);
         return $oEntityField->$name();
+      }
     return false;
   }
 

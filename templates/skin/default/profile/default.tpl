@@ -2,7 +2,7 @@
 
 <table class="table table-profile-info">
 
-  {foreach from=$aFieldsViewsData item=Value key=Name}
+  {foreach from=$aPofileFields item=Value key=Name}
   {assign var="sProfileFieldName" value=$aLang.plugin.fashion.$Name}
   {if $sProfileFieldName && $Value}
 

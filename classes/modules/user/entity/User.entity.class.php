@@ -18,8 +18,8 @@ class PluginFashion_ModuleUser_EntityUser extends PluginFashion_Inherit_ModuleUs
 
     if(!$oProfile || get_class($oProfile) != 'PluginFashion_ModuleProfile' ) parent::getProfileName();
 
-    if($oProfile->getProfileFirstname && $oProfile->getProfileSecondname)
-      $profile_name = $oProfile->getProfileFirstname . ' ' . $oProfile->getProfileSecondname;
+    if($oProfile->profile_firstname && $oProfile->profile_secondname)
+      $profile_name = $oProfile->profile_firstname . ' ' . $oProfile->profile_secondname;
     else
       $profile_name = parent::getProfileName();
 

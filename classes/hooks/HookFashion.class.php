@@ -116,7 +116,7 @@ class PluginFashion_HookFashion extends Hook {
       if(!$type)
         return;
 
-      $this->Viewer_Assign('aFieldsViewsData', $oProfile->getFieldsViewsData());
+      $this->Viewer_Assign('aPofileFields', $oProfile->getFieldsViewsData());
 
       $path = $oProfile->getProfileTemplate($type, 'profile');
 
