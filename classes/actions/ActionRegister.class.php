@@ -22,6 +22,7 @@ class PluginFashion_ActionRegister extends ActionPlugin {
       Router::Action('registration');
     else{
       $profile = $this->GetEventMatch(0);
+      if(count($profile)) $profile = $profile[0];
       $this->Viewer_Assign('header', TRUE);
       $this->Viewer_Assign('footer', TRUE);
       $this->Viewer_Assign('ProfileName', $profile);
