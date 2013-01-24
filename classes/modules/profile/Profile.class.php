@@ -153,25 +153,27 @@ class PluginFashion_ModuleProfile extends ModuleORM {
   }
 
   public function getFields(){
-    return $this->getField()->getFields();
+    $oField = $this->getField();
+    if($oField)
+      return $oField->getFields();
   }
 
   public function getFieldsLabels(){
-    $fields = $this->getFields();
-    if($fields)
-      return $this->getField()->getFieldsLabels($fields);
+    $oEntytiField = $this->getFields();
+    if($oEntytiField)
+      return $this->getField()->getFieldsLabels($oEntytiField);
   }
 
   public function getFieldsViewsData(){
-    $oFields = $this->getFields();
-    if($oFields)
-      return $this->getField()->getFieldsViewsData($oFields);
+    $oEntytiField = $this->getFields();
+    if($oEntytiField)
+      return $this->getField()->getFieldsViewsData($oEntytiField);
   }
 
   public function getFieldsArray(){
-    $oFields = $this->getFields();
-    if($oFields)
-      return $oFields->_getDataArray();
+    $oEntytiField = $this->getFields();
+    if($oEntytiField)
+      return $oEntytiField->_getDataArray();
   }
 
   public function getProfileTemplate($profile, $type = 'registrations'){
