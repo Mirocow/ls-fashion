@@ -10,7 +10,8 @@
       <div class="js-block-profile-content" data-type="all">
       <ul class="profiles">
           {foreach from=$oConfig->get('plugin.fashion.Profiles') item=Key key=Name}
-            <li><a href="{router page='fashion_register'}{$Key}" class="js-register_{$Key}-form-show {$Key}">{$Name}</a></li>
+						{assign var="sProfileFieldName" value=$aLang.plugin.fashion.profile_names.$Key}
+            <li><a href="{router page='fashion_register'}{$Key}" class="js-register_{$Key}-form-show {$Key}">{$sProfileFieldName}</a></li>
           {/foreach}
       </ul>
       </div>

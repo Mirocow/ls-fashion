@@ -15,6 +15,5 @@ CREATE TABLE `prefix_fields` (
   `profile_firstname` varchar(255) DEFAULT NULL,
   `profile_secondname` varchar(255) DEFAULT NULL,
   `profile_experience` varchar(20) DEFAULT NULL,
-  `profile_gender` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8

@@ -19,25 +19,3 @@
   <i class="icon-ok-green validate-ok-field-{$profile_secondname}" style="display: none"></i>
   <i class="icon-question-sign js-tip-help" title="{$profile_secondname_notice}"></i>
   <small class="validate-error-hide validate-error-field-{$profile_secondname}"></small></p>
-
-  {* Опыт работы (выпадающий список) *}
-  {*
-    Нет опыта
-    Небольшой
-    Большой
-  *}
-  {assign var="profile_experience" value='profile_experience'}
-  {assign var="profile_experience_list" value=$oConfig->get('plugin.fashion.profile_experience')}
-  {assign var="profile_experience_label" value=$aLang.plugin.fashion.profile_experience}
-  {assign var="profile_experience_notice" value=$aLang.plugin.fashion.profile_experience_notice}
-  <p><label for="registration-label-{$profile_experience}">{$profile_experience_label}</label>
-  <select name="{$profile_experience}" id="{$profile_experience}" class="input-width-full js-ajax-validate">
-    <option value="0">{$profile_experience_label}</option>
-    {foreach from=$profile_experience_list item=Key}
-      {assign var="sProfileFieldName" value=$aLang.plugin.fashion.profile_experience_fields.$Key}
-      <option value="{$Key}" {if $profile_experience_value==$Key}selected{/if}>{$sProfileFieldName|escape:'html'}</option>
-    {/foreach}
-  </select>
-  <i class="icon-ok-green validate-ok-field-{$profile_experience}" style="display: none"></i>
-  <i class="icon-question-sign js-tip-help" title="{$profile_experience_notice}"></i>
-  <small class="validate-error-hide validate-error-field-{$profile_experience}"></small></p>

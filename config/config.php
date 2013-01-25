@@ -11,14 +11,9 @@ $config['LoginEqMail'] = TRUE;
 
 // Список профелей
 $config['Profiles'] = array(
-    'Модели' => 'model',
-    'Фотографы' => 'photo',
-    'Стилисты/Визажисты' => 'stylist',
-    'Музыканты' => 'musician',
-    'Певцы' => 'singer',
-    'Актеры' => 'actor',
-    'Кастинг директоры' => 'casting',
-    'Скауты/Агенты' => 'agent',
+    'programmer',
+    'makeup_man',
+		'user',		
 );
 
 // Список полей с привязкой к профилю
@@ -32,25 +27,15 @@ $config['Fields'] = array(
     'aValidateRules' => array(
       array('required', 'isEmpty' => false, 'on'=>array(
         '',
-        'registration_model',
-        'registration_photo',
-        'registration_stylist',
-        'registration_musician',
-        'registration_singer',
-        'registration_actor',
-        'registration_casting',
-        'registration_agent',
+        'registration_programmer',
+        'registration_makeup_man',
+        'registration_user',				
       )),
       array('string', 'on'=>array(
         '',
-        'registration_model',
-        'registration_photo',
-        'registration_stylist',
-        'registration_musician',
-        'registration_singer',
-        'registration_actor',
-        'registration_casting',
-        'registration_agent',
+        'registration_programmer',
+        'registration_makeup_man',
+        'registration_user',
       )),
     ),
   ),
@@ -63,25 +48,15 @@ $config['Fields'] = array(
     'aValidateRules' => array(
       array('required', 'isEmpty' => false, 'on'=>array(
         '',
-        'registration_model',
-        'registration_photo',
-        'registration_stylist',
-        'registration_musician',
-        'registration_singer',
-        'registration_actor',
-        'registration_casting',
-        'registration_agent',
+        'registration_programmer',
+        'registration_makeup_man',
+        'registration_user',
       )),
       array('string', 'on'=>array(
         '',
-        'registration_model',
-        'registration_photo',
-        'registration_stylist',
-        'registration_musician',
-        'registration_singer',
-        'registration_actor',
-        'registration_casting',
-        'registration_agent',
+        'registration_programmer',
+        'registration_makeup_man',
+        'registration_user',
       )),
     ),
   ),
@@ -89,9 +64,10 @@ $config['Fields'] = array(
   'profile_experience' => array(
     'Actions' => array(),
     'fields' => array(
-      'NoExperience',
-      'Small',
-      'High',
+      'Без опыта',		
+      'Начинающий',
+      'Опытный',
+      'Ведущий разработчик',
     ),
     'widget' => 'combo', // Применяется с модулем http://livestreet.ru/blog/13956.html
     'type' => array( ), // Настройки для поля в БД
@@ -99,238 +75,18 @@ $config['Fields'] = array(
     'aValidateRules' => array(
       array('required', 'isEmpty' => false, 'on'=>array(
         '',
-        'registration_model',
-        'registration_photo',
-        'registration_stylist',
-        'registration_musician',
-        'registration_singer',
-        'registration_actor',
-        'registration_casting',
-        'registration_agent',
+        'registration_programmer',
+        'registration_makeup_man',
       )),
       array('string', 'on'=>array(
         '',
-        'registration_model',
-        'registration_photo',
-        'registration_stylist',
-        'registration_musician',
-        'registration_singer',
-        'registration_actor',
-        'registration_casting',
-        'registration_agent',
+        'registration_programmer',
+        'registration_makeup_man',
       )),
       array('is_selected', 'on'=>array(
         '',
-        'registration_model',
-        'registration_photo',
-        'registration_stylist',
-        'registration_musician',
-        'registration_singer',
-        'registration_actor',
-        'registration_casting',
-        'registration_agent',
-      ))
-    ),
-  ),
-
-  'profile_gender' => array(
-    'Actions' => array(),
-    'fields' => array(
-      'Male',
-      'Female',
-    ),
-    'widget' => 'combo', // Применяется с модулем http://livestreet.ru/blog/13956.html
-    'type' => array( ), // Настройки для поля в БД
-    // Правила проверки поля
-    'aValidateRules' => array(
-      array('required', 'isEmpty' => false, 'on'=>array(
-        'registration_model',
-        'registration_photo',
-        'registration_stylist',
-        'registration_musician',
-        'registration_singer',
-        'registration_actor',
-        'registration_casting',
-        'registration_agent',
-      )),
-      array('string', 'on'=>array(
-        'registration_model',
-        'registration_photo',
-        'registration_stylist',
-        'registration_musician',
-        'registration_singer',
-        'registration_actor',
-        'registration_casting',
-        'registration_agent',
-      )),
-      array('is_selected', 'on'=>array(
-        'registration_model',
-        'registration_photo',
-        'registration_stylist',
-        'registration_musician',
-        'registration_singer',
-        'registration_actor',
-        'registration_casting',
-        'registration_agent',
-      ))
-    ),
-  ),
-
-  //
-  // Жен
-  //
-  'profile_chest' => array(
-    'Actions' => array(),
-    'fields' => array(
-      0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6
-    ),
-    'widget' => 'combo', // Применяется с модулем http://livestreet.ru/blog/13956.html
-    'type' => array( ), // Настройки для поля в БД
-    // Правила проверки поля
-    'aValidateRules' => array(
-      array('required', 'isEmpty' => false, 'on'=>array(
-        'registration_model',
-      )),
-      array('string', 'on'=>array(
-        'registration_model',
-      )),
-      array('is_selected', 'on'=>array(
-        'registration_model',
-      ))
-    ),
-  ),
-
-  'profile_waist' => array(
-    'Actions' => array(),
-    'widget' => 'text', // Применяется с модулем http://livestreet.ru/blog/13956.html
-    'type' => array( ), // Настройки для поля в БД
-    // Правила проверки поля
-    'aValidateRules' => array(
-      array('required', 'isEmpty' => false, 'on'=>array(
-        '',
-        'registration_model',
-      )),
-      array('string', 'on'=>array(
-        '',
-        'registration_model',
-      )),
-    ),
-  ),
-
-  'profile_hips' => array(
-    'Actions' => array(),
-    'widget' => 'text', // Применяется с модулем http://livestreet.ru/blog/13956.html
-    'type' => array( ), // Настройки для поля в БД
-    // Правила проверки поля
-    'aValidateRules' => array(
-      array('required', 'isEmpty' => false, 'on'=>array(
-        '',
-        'registration_model',
-      )),
-      array('string', 'on'=>array(
-        '',
-        'registration_model',
-      )),
-    ),
-  ),
-
-  //
-  //
-  //
-
-  'profile_growth' => array(
-    'Actions' => array(),
-    'widget' => 'text', // Применяется с модулем http://livestreet.ru/blog/13956.html
-    'type' => array( ), // Настройки для поля в БД
-    // Правила проверки поля
-    'aValidateRules' => array(
-      array('required', 'isEmpty' => false, 'on'=>array(
-        'registration_model',
-        'registration_actor',
-      )),
-      array('string', 'on'=>array(
-        'registration_model',
-        'registration_actor',
-      )),
-    ),
-  ),
-
-  'profile_weight' => array(
-    'Actions' => array(),
-    'widget' => 'text', // Применяется с модулем http://livestreet.ru/blog/13956.html
-    'type' => array( ), // Настройки для поля в БД
-    // Правила проверки поля
-    'aValidateRules' => array(
-      array('required', 'isEmpty' => false, 'on'=>array(
-        'registration_model',
-        'registration_actor',
-      )),
-      array('string', 'on'=>array(
-        'registration_model',
-        'registration_actor',
-      )),
-    ),
-  ),
-
-  'profile_haircolor' => array(
-    'Actions' => array(),
-    'fields' => array(
-      'блонд',
-      'светло-русый',
-      'русый',
-      'темно-русый',
-      'рыжий',
-      'седой',
-      'светло-каштановый',
-      'каштановый',
-      'темно-каштановый',
-      'черный',
-      'другой'
-    ),
-    'widget' => 'combo', // Применяется с модулем http://livestreet.ru/blog/13956.html
-    'type' => array( ), // Настройки для поля в БД
-    // Правила проверки поля
-    'aValidateRules' => array(
-      array('required', 'isEmpty' => false, 'on'=>array(
-        'registration_model',
-        'registration_actor',
-      )),
-      array('string', 'on'=>array(
-        'registration_model',
-        'registration_actor',
-      )),
-      array('is_selected', 'on'=>array(
-        'registration_model',
-        'registration_actor',
-      ))
-    ),
-  ),
-
-  'profile_eyes' => array(
-    'Actions' => array(),
-    'fields' => array(
-      'голубой',
-      'зеленый',
-      'карий',
-      'серый',
-      'черный',
-      'другой'
-    ),
-    'widget' => 'combo', // Применяется с модулем http://livestreet.ru/blog/13956.html
-    'type' => array( ), // Настройки для поля в БД
-    // Правила проверки поля
-    'aValidateRules' => array(
-      array('required', 'isEmpty' => false, 'on'=>array(
-        'registration_model',
-        'registration_actor',
-      )),
-      array('string', 'on'=>array(
-        'registration_model',
-        'registration_actor',
-      )),
-      array('is_selected', 'on'=>array(
-        'registration_model',
-        'registration_actor',
+        'registration_programmer',
+        'registration_makeup_man',
       ))
     ),
   ),
