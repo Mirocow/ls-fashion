@@ -7,10 +7,6 @@
   {hook run='form_registration_begin' isPopup=true}
 
   {* Имя (текст) *}
-  {assign var="profile_firstname" value='profile_firstname'}
-  {assign var="profile_firstname_value" value=$_aRequest.profile_firstname}
-  {assign var="profile_firstname_label" value=$aLang.plugin.fashion.profile_firstname}
-  {assign var="profile_firstname_notice" value=$aLang.plugin.fashion.profile_firstname_notice}
   <p><label for="registration-label-{$profile_firstname}">{$profile_firstname_label}</label>
   <input type="text" name="{$profile_firstname}" id="registration-{$profile_firstname}" value="{$profile_firstname_value}" class="input-text input-width-300 js-ajax-validate" />
   <i class="icon-ok-green validate-ok-field-{$profile_firstname}" style="display: none"></i>
@@ -18,10 +14,6 @@
   <small class="validate-error-hide validate-error-field-{$profile_firstname}"></small></p>
 
   {* Фамилия (текст) *}
-  {assign var="profile_secondname" value='profile_secondname'}
-  {assign var="profile_secondname_value" value=$_aRequest.profile_secondname}
-  {assign var="profile_secondname_label" value=$aLang.plugin.fashion.profile_secondname}
-  {assign var="profile_secondname_notice" value=$aLang.plugin.fashion.profile_secondname_notice}
   <p><label for="registration-label-{$profile_secondname}">{$profile_secondname_label}</label>
   <input type="text" name="{$profile_secondname}" id="registration-{$profile_secondname}" value="{$profile_secondname_value}" class="input-text input-width-300 js-ajax-validate" />
   <i class="icon-ok-green validate-ok-field-{$profile_secondname}" style="display: none"></i>
@@ -34,11 +26,6 @@
     Небольшой
     Большой
   *}
-  {assign var="profile_experience" value='profile_experience'}
-  {assign var="profile_experience_list" value=$oConfig->get('plugin.fashion.profile_experience')}
-  {assign var="profile_experience_value" value=$_aRequest.profile_experience}
-  {assign var="profile_experience_label" value=$aLang.plugin.fashion.profile_experience}
-  {assign var="profile_experience_notice" value=$aLang.plugin.fashion.profile_experience_notice}
   <p><label for="registration-label-{$profile_experience}">{$profile_experience_label}</label>
   <select name="{$profile_experience}" id="{$profile_experience}" class="input-width-full js-ajax-validate">
     <option value="0">{$profile_experience_label}</option>

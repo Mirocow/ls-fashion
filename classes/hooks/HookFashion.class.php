@@ -87,13 +87,23 @@ class PluginFashion_HookFashion extends Hook {
       $oProfile = $oUserCurrent->getProfile();
 
       if(get_class($oProfile) != 'PluginFashion_ModuleProfile') return;
-
-      $type = $oProfile->getType();
-
       if(!$oProfile->getFieldsArray()) return;
 
+      $type = $oProfile->getType();
+      $aLang = $this->Lang_GetLangMsg();
+
       foreach($oProfile->getFieldsArray() as $field_name => $value){
+
+        $this->Viewer_Assign($field_name, $field_name);
+        if(($list = Config::Get('plugin.fashion.'.$field_name)) && is_array($list) && count($list))
+          $this->Viewer_Assign($field_name.'_list', $list);
+        if(isset($aLang['plugin']['fashion'][$field_name]))
+          $this->Viewer_Assign($field_name.'_label', $aLang['plugin']['fashion'][$field_name]);
+        if(isset($aLang['plugin']['fashion'][$field_name.'_notice']))
+          $this->Viewer_Assign($field_name.'_notice', $aLang['plugin']['fashion'][$field_name.'_notice']);
+
         $this->Viewer_Assign("{$field_name}_value",$value);
+
       }
 
       $path = $oProfile->getProfileTemplate($type, 'profile_settings');
