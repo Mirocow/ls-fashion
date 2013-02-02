@@ -3,7 +3,7 @@
 {assign var="sTemplatePathPlugin" value=$aTemplatePathPlugin.fashion}
 {include file="$sTemplatePathPlugin/registrations/forms_js.tpl" ProfileName=$ProfileName}
 
-<form action="{router page="fashion_register/$ProfileName"}" method="post" id="register-{$ProfileName}-form">
+<form action="{router page="fashion_register/$ProfileName"}" method="post" id="register-form">
   {hook run='form_registration_begin' isPopup=true}
 
   {* Имя (текст) *}
@@ -50,7 +50,7 @@
 
   <input type="hidden" name="profile_type" value="{$ProfileName}">
   <input type="hidden" name="return-path" value="{$PATH_WEB_CURRENT|escape:'html'}">
-  <button type="submit" name="submit_register" class="button button-primary" id="register-{$ProfileName}-form-submit">{$aLang.registration_submit}</button>
+  <button type="submit" name="submit_register" class="button button-primary" id="register-form-submit">{$aLang.registration_submit}</button>
 </form>
 
 

@@ -10,8 +10,17 @@ class PluginFashion_BlockFashion extends Block {
 
   public function Exec () {
 
-    foreach($this->aParams as $name => $param)
-      $this->Viewer_Assign($name, $param);
+    $aProfiles = array();
+    $aLang = $this->Lang_GetLangMsg();
+
+    foreach(Config::Get('plugin.fashion') as $Key => $Value)
+      $this->Viewer_Assign($Key, $Value);
+
+    foreach(Config::Get('plugin.fashion.Profiles') as $field_name)
+      $aProfiles[$field_name] = $aLang['plugin']['fashion'][profile_names][$field_name];
+
+    $this->Viewer_Assign('aProfiles', $aProfiles);
+
   }
 
 }

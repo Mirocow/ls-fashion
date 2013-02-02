@@ -18,6 +18,9 @@ class PluginFashion_ActionRegister extends ActionPlugin {
   }
 
   public function Register(){
+    if ($this->User_GetUserCurrent()) {
+      return parent::EventNotFound();
+    }
     if(isPost('submit_register'))
       Router::Action('registration');
     else{
@@ -29,15 +32,24 @@ class PluginFashion_ActionRegister extends ActionPlugin {
 
       $aRequest=$_REQUEST;
       func_htmlspecialchars($aRequest);
-
       $aLang = $this->Lang_GetLangMsg();
-
       $Fields = Config::Get('plugin.fashion.Fields');
+
       foreach($Fields as $field_name => $Field){
 
         $this->Viewer_Assign($field_name, $field_name);
-        if(($list = Config::Get('plugin.fashion.'.$field_name)) && is_array($list) && count($list))
-          $this->Viewer_Assign($field_name.'_list', $list);
+
+        // Поле список
+        $list = Config::Get('plugin.fashion.'.$field_name);
+        if(is_array($list)){
+          if($list)
+            $this->Viewer_Assign($field_name.'_list', $list);
+          elseif( isset($aLang['plugin']['fashion'][$field_name.'_fields']) )
+            $this->Viewer_Assign($field_name.'_list', $aLang['plugin']['fashion'][$field_name.'_fields']);
+          else
+            $this->Viewer_Assign($field_name.'_list', array());
+        }
+
         if(isset($aRequest[$field_name]))
           $this->Viewer_Assign($field_name.'_value', $aRequest[$field_name]);
         if(isset($aLang['plugin']['fashion'][$field_name]))

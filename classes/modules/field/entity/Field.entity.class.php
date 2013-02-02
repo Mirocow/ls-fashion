@@ -34,23 +34,38 @@ class PluginFashion_ModuleField_EntityField extends EntityORM {
     //
     $Profiles = Config::Get('plugin.fashion.Profiles');
     $Fields = Config::Get('plugin.fashion.Fields');
+    $aLang = $this->Lang_GetLangMsg();
+
+    // TODO 5: Добавить кеширование правил
+
     foreach($Profiles as $Profile)
       foreach($Fields as $field_name => $Field)
         if(isset($Field['aValidateRules']))
           foreach($Field['aValidateRules'] as $validateRule){
             array_unshift($validateRule, $field_name);
+            if(!isset($validateRule['msg']) && isset($aLang['plugin']['fashion'][$field_name.'_error_used']))
+              $validateRule['msg'] = $aLang['plugin']['fashion'][$field_name.'_error_used'];
             $this->aValidateRules[] = $validateRule;
           }
-     //
-     // Если необходимо ввести дополнительные проверки, то они должны быть по правилу
-     // on => [имя_правила]_[имя_профиля]
-     //
      $this->aValidateRules[] = array('id', 'required', 'isEmpty' => false, 'on'=>array('', 'registration'));
   }
 
   public function ValidateIsSelected($sValue,$aParams) {
+    if(!isset($this->_aData) || !$this->_aData || !is_array($this->_aData)) return true;
+
+    $fields = array_keys($this->_aData);
+    $field_name = $fields[0];
+
+    $aLang = $this->Lang_GetLangMsg();
+
+    // TODO 5: Добавить кеширование правил
+
     if(!$sValue)
-      return 'Не выбран ни один пункт';
+      if(isset($aLang['plugin']['fashion'][$field_name.'_error_used']) && $aLang['plugin']['fashion'][$field_name.'_error_used'])
+        return $aLang['plugin']['fashion'][$field_name.'_error_used'];
+      else
+        return 'Не выбран ни один пункт';
+
     return true;
   }
 

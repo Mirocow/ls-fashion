@@ -6,14 +6,14 @@
   http://livestreet.ru/blog/13927.html
 */
 
-$config['useAjax'] = FAlSE;
+$config['useAjax'] = false;
 $config['LoginEqMail'] = TRUE;
 
 // Список профелей
 $config['Profiles'] = array(
     'programmer',
     'makeup_man',
-		'user',		
+		'user',
 );
 
 // Список полей с привязкой к профилю
@@ -29,7 +29,7 @@ $config['Fields'] = array(
         '',
         'registration_programmer',
         'registration_makeup_man',
-        'registration_user',				
+        'registration_user',
       )),
       array('string', 'on'=>array(
         '',
@@ -64,7 +64,7 @@ $config['Fields'] = array(
   'profile_experience' => array(
     'Actions' => array(),
     'fields' => array(
-      'Без опыта',		
+      'Без опыта',
       'Начинающий',
       'Опытный',
       'Ведущий разработчик',

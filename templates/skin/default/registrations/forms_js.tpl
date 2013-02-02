@@ -3,7 +3,7 @@
     jQuery(document).ready(function($){
 
       // Вешаем обработчик на input.js-ajax-validate
-      $('#register-{$ProfileName}-form').find('input.js-ajax-validate').blur(function(e){
+      $('#register-form').find('input.js-ajax-validate').blur(function(e){
         var aParams={ };
         if ($(e.target).attr('name')=='password_confirm') {
           aParams['password']=$('#user-password').val();
@@ -14,7 +14,7 @@
             ls.user.validateRegistrationField(
               'password_confirm',
               $('#user-password-confirm').val(),
-              $('#register-{$ProfileName}-form'),
+              $('#register-form'),
               { 'password': $(e.target).val() }
             );
           }
@@ -23,56 +23,56 @@
         ls.user.validateRegistrationField(
           $(e.target).attr('name'),
           $(e.target).val(),
-          $('#register-{$ProfileName}-form'),
+          $('#register-form'),
           aParams
         );
       });
 
       // Вешаем обработчик на select.js-ajax-validate
-      $('#register-{$ProfileName}-form').find('select.js-ajax-validate').change(function(e){
+      $('#register-form').find('select.js-ajax-validate').change(function(e){
         var aParams={ };
         // Валидация полей
         ls.user.validateRegistrationField(
           $(e.target).attr('name'),
           $(e.target).val(),
-          $('#register-{$ProfileName}-form'),
+          $('#register-form'),
           aParams
         );
       });
 
       // Вешаем обработчик на select.js-ajax-validate
-      $('#register-{$ProfileName}-form').find('select.js-ajax-validate').mouseover(function(e){
+      $('#register-form').find('select.js-ajax-validate').mouseover(function(e){
         var aParams={ };
         // Валидация полей
         ls.user.validateRegistrationField(
           $(e.target).attr('name'),
           $(e.target).val(),
-          $('#register-{$ProfileName}-form'),
+          $('#register-form'),
           aParams
         );
       });
 
       // Вешаем обработчик на select.js-ajax-validate
-      {*$('#register-{$ProfileName}-form').find('select.js-ajax-validate').mouseout(function(e){
+      {*$('#register-form').find('select.js-ajax-validate').mouseout(function(e){
         var aParams={ };
         // Валидация полей
         ls.user.validateRegistrationField(
           $(e.target).attr('name'),
           $(e.target).val(),
-          $('#register-{$ProfileName}-form'),
+          $('#register-form'),
           aParams
         );
       });*}
 
       // Сабмит
-      $('#register-{$ProfileName}-form').bind('submit',function(){
+      $('#register-form').bind('submit',function(){
         // Отключаем кнопки
-        $('#register-{$ProfileName}-form-submit').attr('disabled',true);
-        ls.user.registration('register-{$ProfileName}-form');
+        $('#register-form-submit').attr('disabled',true);
+        ls.user.registration('register-form');
         return false;
       });
 
-      $('#register-{$ProfileName}-form-submit').attr('disabled',false);
+      $('#register-form-submit').attr('disabled',false);
     });
   </script>
 {*/if*}

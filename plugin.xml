@@ -7,7 +7,7 @@
 		<lang name="default">Mirocow</lang>
 	</author>
 	<homepage>http://mirocow.com</homepage>
-	<version>0.0.1</version>
+	<version>0.0.4</version>
 	<requires>
 		<livestreet>1.*</livestreet>
 		<plugins>

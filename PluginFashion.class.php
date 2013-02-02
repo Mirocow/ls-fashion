@@ -46,7 +46,7 @@ class PluginFashion extends Plugin {
     if (!$this->isTableExists('prefix_fields')) {
       $return = $this->ExportSQL(dirname(__FILE__).'/fields.sql');
     }
-    return isset($return['result'])? $return['result']: false;
+    return isset($return['result'])? $return['result']: true;
   }
 
   public function Deactivate () {

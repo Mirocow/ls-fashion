@@ -95,8 +95,18 @@ class PluginFashion_HookFashion extends Hook {
       foreach($oProfile->getFieldsArray() as $field_name => $value){
 
         $this->Viewer_Assign($field_name, $field_name);
-        if(($list = Config::Get('plugin.fashion.'.$field_name)) && is_array($list) && count($list))
-          $this->Viewer_Assign($field_name.'_list', $list);
+
+        // Поле список
+        $list = Config::Get('plugin.fashion.'.$field_name);
+        if(is_array($list)){
+          if($list)
+            $this->Viewer_Assign($field_name.'_list', $list);
+          elseif( isset($aLang['plugin']['fashion'][$field_name.'_fields']) )
+            $this->Viewer_Assign($field_name.'_list', $aLang['plugin']['fashion'][$field_name.'_fields']);
+          else
+            $this->Viewer_Assign($field_name.'_list', array());
+        }
+
         if(isset($aLang['plugin']['fashion'][$field_name]))
           $this->Viewer_Assign($field_name.'_label', $aLang['plugin']['fashion'][$field_name]);
         if(isset($aLang['plugin']['fashion'][$field_name.'_notice']))
@@ -116,18 +126,14 @@ class PluginFashion_HookFashion extends Hook {
   public function profile($aData) {
 
       if(!isset($aData['oUserProfile'])) return;
-
       $oProfile = $aData['oUserProfile']->getProfile();
-
       if(get_class($oProfile) != 'PluginFashion_ModuleProfile') return;
 
       $type = $oProfile->getType();
-
       if(!$type)
         return;
 
       $this->Viewer_Assign('aPofileFields', $oProfile->getFieldsViewsData());
-
       $path = $oProfile->getProfileTemplate($type, 'profile');
 
       return $this->Viewer_Fetch($path);
