@@ -12,12 +12,13 @@ class PluginFashion_ActionRegister extends ActionPlugin {
   }
 
   protected function RegisterEvent() {
+    //parent::RegisterEvent();
     foreach(Config::Get('plugin.fashion.Profiles') as $title => $item){
-      $this->AddEvent($item,'Register');
+      $this->AddEvent($item,'EventRegister');
     }
   }
 
-  public function Register(){
+  public function EventRegister(){
     if ($this->User_GetUserCurrent()) {
       return parent::EventNotFound();
     }

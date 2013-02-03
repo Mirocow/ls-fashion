@@ -12,6 +12,7 @@ return array(
     'programmer' => 'Программист',
     'makeup_man' => 'Верстальщик',
     'user' => 'Пользователь',
+    'other' => 'Остальные', // Служебное поле
   ),
 
   'profile_firstname' => 'Ваше имя',
@@ -26,7 +27,7 @@ return array(
   'profile_experience_notice' => 'Опыт работы',
   'profile_experience_error_used' => '',
   'profile_experience_fields' => array(
-      'Без опыта' => 'Без опыта',		
+      'Без опыта' => 'Без опыта',
       'Начинающий' => 'Начинающий',
       'Опытный' => 'Опытный',
       'Ведущий разработчик' => 'Ведущий разработчик',

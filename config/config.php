@@ -99,6 +99,9 @@ $config['Fields'] = array(
 foreach($config['Fields'] as $name => $params)
   $config[$name] = isset($params['fields'])? $params['fields']: $name;
 
+foreach($config['Profiles'] as $ProfileName)
+  $config['AmountProfiles'][$ProfileName] = 0;
+
 // После правок полей, необходимо запустить http://site.com/fashion/update
 // Для создания полей в БД
 
@@ -115,10 +118,27 @@ Config::Set ('block.rule_register', array (
   //'path' => '',
   'blocks' => array (
     'right' => array (
-      'fashion' => array (
+      'register' => array (
         'params' => array (
           'plugin' => 'fashion',
           'useAjax' => (bool)$config['useAjax'],
+        ),
+        'priority' => 1000,
+      ),
+    )
+  ),
+));
+
+// Регистрация блока списка профилей
+Config::Set ('block.rule_profiles', array (
+  'action' => array ('index','people'),
+  //'path' => '',
+  'blocks' => array (
+    'right' => array (
+      'profiles' => array (
+        'params' => array (
+          'plugin' => 'fashion',
+          'useAjax' => false,
         ),
         'priority' => 1000,
       ),

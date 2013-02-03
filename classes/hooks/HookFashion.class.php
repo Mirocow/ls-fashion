@@ -19,6 +19,8 @@ class PluginFashion_HookFashion extends Hook {
 
     $this->AddHook('template_form_settings_profile_end', 'settings',__CLASS__,-100);
     $this->AddHook('template_profile_whois_item_after_privat', 'profile', __CLASS__,-100);
+    $this->AddHook('template_people_sidebar_profiles', 'profiles', __CLASS__,-100);
+
   }
 
   // ---
@@ -57,18 +59,11 @@ class PluginFashion_HookFashion extends Hook {
     return true;
   }
 
-  /**
-   * Валидация полей профиля
-   * Сценарий: registration
-   *
-   * @param mixed $aData
-   */
   public function _registration_validate_field($aData = array()){
     $aPlugins=$this->Plugin_GetList();
     if (!(isset($aPlugins['fashion']))) {
       return true;
     }
-    // $this->PluginFashion_ModuleField_Validate($aData['aField']['field'])
     if(($aErrors = LS::getInstance()
       ->GetModuleObject('PluginFashion_ModuleField')
         ->Validate($aData['aField']['field'], $aData['aField']['value']))){
@@ -133,10 +128,18 @@ class PluginFashion_HookFashion extends Hook {
       if(!$type)
         return;
 
+      $aLang = $this->Lang_GetLangMsg();
+      if(isset($aLang['plugin']['fashion']['profile_names'][$type]))
+        $this->Viewer_Assign('PofileName', $aLang['plugin']['fashion']['profile_names'][$type]);
+
       $this->Viewer_Assign('aPofileFields', $oProfile->getFieldsViewsData());
       $path = $oProfile->getProfileTemplate($type, 'profile');
 
       return $this->Viewer_Fetch($path);
+  }
+
+  public function profiles($aData){
+    return 'XXX';
   }
 
 }

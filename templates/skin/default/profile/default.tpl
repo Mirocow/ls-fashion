@@ -2,6 +2,11 @@
 
 <table class="table table-profile-info">
 
+  <tr>
+    <td class="cell-label">{$PofileName}</td>
+    <td></td>
+  </tr>
+
   {foreach from=$aPofileFields item=Value key=Name}
   {assign var="sProfileFieldName" value=$aLang.plugin.fashion.$Name}
   {if $sProfileFieldName && $Value}

@@ -9,14 +9,14 @@ Fashion from [LiveStreet CMS](http://livestreetcms.com/ "LiveStreet CMS")
 Возможности
 -----------
 
-Реализовано:
+Возможности:
 * Сущность профилей
 * Сущность полей
 * Вывод полей в профиле пользователя
 * Редактирование полей
-* Модуль позволяет выбирать тип профиля при регистрации
-* Модуль совместим с темой Social
-* Все настройки выполняются из файла конфигурации config.php
+* Модуль будет поддерживать выбор профиля при регистрации
+* Модуль будет совместим с темой Social и будет поддерживать Ajax
+* Настройки выполняются из файла конфигурации
 
 Сущности:
 * Field — Поле профиля (текстовое поле, список итд)
@@ -41,99 +41,83 @@ Fashion from [LiveStreet CMS](http://livestreetcms.com/ "LiveStreet CMS")
 Field (Поля):
 * Поле: Любой тип данных
 * Поддержка поля: Конфигурование поля через файл конфигурации
-* Валидация: Выполняется по правилам фреймворка и сожержится в config.php
+* Валидация: Выполняется по правилам фреймворка
+
+Пример валидации:
+
+    protected $aValidateRules=array(
+      array('profile_firstname','required', 'isEmpty' => false, 'on'=>array('', 'registration')),
+      array('profile_firstname','string', 'on'=>array('', 'registration')), // '' - означает дефолтный сценарий
+
+      array('profile_secondname','required', 'isEmpty' => false, 'on'=>array('', 'registration')),
+      array('profile_secondname','string', 'on'=>array('', 'registration')),
+
+      array('profile_experience','required', 'isEmpty' => false, 'on'=>array('', 'registration')),
+      array('profile_experience','string', 'on'=>array('', 'registration')),
+      array('profile_experience','is_selleted', 'on'=>array('', 'registration')),
+
+      array('profile_gender','required', 'isEmpty' => false, 'on'=>array('', 'registration')),
+      array('profile_gender','string', 'on'=>array('', 'registration')),
+      array('profile_gender','is_selleted', 'on'=>array('', 'registration')),
+    );
+
+    public function ValidateIsSelleted($sValue,$aParams) {
+      return 'Не выбран ни один пункт';
+    }
+
 
 Видимость: Настраивается из файла конфигурации (при регистрации, в профиле итд)
 Обработчики: Реализованы хуки почти на все необходимые операции
 
 Пример конфигурации:
 
-	$config['useAjax'] = FAlSE;
-	$config['LoginEqMail'] = TRUE;
-	
-	// Список профелей
-	$config['Profiles'] = array(
-	    'programmer',
-	    'makeup_man',
-			'user',		
-	);
-	
-	// Список полей с привязкой к профилю
-	$config['Fields'] = array(
-	
-	  'profile_firstname' => array(
-	    'Actions' => array(),
-	    'widget' => 'text', // Применяется с модулем http://livestreet.ru/blog/13956.html
-	    'type' => array( ), // Настройки для поля в БД
-	    // Правила проверки поля
-	    'aValidateRules' => array(
-	      array('required', 'isEmpty' => false, 'on'=>array(
-	        '',
-	        'registration_programmer',
-	        'registration_makeup_man',
-	        'registration_user',				
-	      )),
-	      array('string', 'on'=>array(
-	        '',
-	        'registration_programmer',
-	        'registration_makeup_man',
-	        'registration_user',
-	      )),
-	    ),
-	  ),
-	
-	  'profile_secondname' => array(
-	    'Actions' => array(),
-	    'widget' => 'text', // Применяется с модулем http://livestreet.ru/blog/13956.html
-	    'type' => array( ), // Настройки для поля в БД
-	    // Правила проверки поля
-	    'aValidateRules' => array(
-	      array('required', 'isEmpty' => false, 'on'=>array(
-	        '',
-	        'registration_programmer',
-	        'registration_makeup_man',
-	        'registration_user',
-	      )),
-	      array('string', 'on'=>array(
-	        '',
-	        'registration_programmer',
-	        'registration_makeup_man',
-	        'registration_user',
-	      )),
-	    ),
-	  ),
-	
-	  'profile_experience' => array(
-	    'Actions' => array(),
-	    'fields' => array(
-	      'Без опыта',		
-	      'Начинающий',
-	      'Опытный',
-	      'Ведущий разработчик',
-	    ),
-	    'widget' => 'combo', // Применяется с модулем http://livestreet.ru/blog/13956.html
-	    'type' => array( ), // Настройки для поля в БД
-	    // Правила проверки поля
-	    'aValidateRules' => array(
-	      array('required', 'isEmpty' => false, 'on'=>array(
-	        '',
-	        'registration_programmer',
-	        'registration_makeup_man',
-	      )),
-	      array('string', 'on'=>array(
-	        '',
-	        'registration_programmer',
-	        'registration_makeup_man',
-	      )),
-	      array('is_selected', 'on'=>array(
-	        '',
-	        'registration_programmer',
-	        'registration_makeup_man',
-	      ))
-	    ),
-	  ),
-	
-	);
+      $config['useAjax'] = FAlSE;
+      $config['LoginEqMail'] = TRUE;
+
+      // Список профелй
+      $config['Profiles'] = array(
+          'Модель' => 'model',
+          'Фотограф' => 'photo',
+      );
+
+      // Список полей с привязкой к профилю
+      $config['Fields'] = array(
+        'profile_firstname' => array(
+          'Actions' => array(),
+          'Profiles' => array('model', 'photo'),
+          'fields' => array('Имя' => 'firstname'),
+          'widget' => 'text', // Применяется с модулем http://livestreet.ru/blog/13956.html
+          'type' => array( ), // Настройки для поля в БД
+        ),
+        'profile_secondname' => array(
+          'Actions' => array(),
+          'Profiles' => array('model', 'photo'),
+          'fields' => array('Фамилия' => 'secondname'),
+          'widget' => 'text', // Применяется с модулем http://livestreet.ru/blog/13956.html
+          'type' => array( ), // Настройки для поля в БД
+        ),
+        'profile_experience' => array(
+          'Actions' => array(),
+          'Profiles' => array('model', 'photo'),
+          'fields' => array(
+            'Нет опыта' => 'NoExperience',
+            'Небольшой' => 'Small',
+            'Большой' => 'High',
+          ),
+          'widget' => 'combo', // Применяется с модулем http://livestreet.ru/blog/13956.html
+          'type' => array( ), // Настройки для поля в БД
+        ),
+        'profile_gender' => array(
+          'Actions' => array(),
+          'Profiles' => array('model', 'photo'),
+          'fields' => array(
+            'Муж' => 'Male',
+            'Жен' => 'Female ',
+          ),
+          'widget' => 'combo', // Применяется с модулем http://livestreet.ru/blog/13956.html
+          'type' => array( ), // Настройки для поля в БД
+        ),
+      );
 
 Установка
 ---------
@@ -143,57 +127,21 @@ Field (Поля):
 * Настроить plugins/fashion/config/config.php
 
 
-В дальнейшем все настройки можно будет выполнять из адмики, используя плагин ls-config: http://ls.mirocow.com/blog/ls-config/
+В дальнейшем все настройки можно будет выполнять из адмики, используя плагин Config: livestreet.ru/blog/13945.html
 
-В шаблонах сделан задел на будущий модуль ls-widget (Возможность создавать виджеты простой функцией, аналог виджетов Yii Framework)
-http://ls.mirocow.com/blog/ls-widget/
-
+В шаблонах сделан задел на будущий модуль Widget (Возможность создавать виджеты простой функцией, аналог виджетов Yii Framework)
 Пример:
 
-	  {* Имя (текст) *}
-	  {assign var="profile_firstname" value='profile_firstname'}
-	  {assign var="profile_firstname_value" value=$_aRequest.profile_firstname}
-	  {assign var="profile_firstname_label" value=$aLang.plugin.fashion.profile_firstname}
-	  {assign var="profile_firstname_notice" value=$aLang.plugin.fashion.profile_firstname_notice}
-	  <p><label for="registration-label-{$profile_firstname}">{$profile_firstname_label}</label>
-	  <input type="text" name="{$profile_firstname}" id="registration-{$profile_firstname}" value="{$profile_firstname_value}" class="input-text input-width-300 js-ajax-validate" />
-	  <i class="icon-ok-green validate-ok-field-{$profile_firstname}" style="display: none"></i>
-	  <i class="icon-question-sign js-tip-help" title="{$profile_firstname_notice}"></i>
-	  <small class="validate-error-hide validate-error-field-{$profile_firstname}"></small></p>
-	
-	  {* Фамилия (текст) *}
-	  {assign var="profile_secondname" value='profile_secondname'}
-	  {assign var="profile_secondname_value" value=$_aRequest.profile_secondname}
-	  {assign var="profile_secondname_label" value=$aLang.plugin.fashion.profile_secondname}
-	  {assign var="profile_secondname_notice" value=$aLang.plugin.fashion.profile_secondname_notice}
-	  <p><label for="registration-label-{$profile_secondname}">{$profile_secondname_label}</label>
-	  <input type="text" name="{$profile_secondname}" id="registration-{$profile_secondname}" value="{$profile_secondname_value}" class="input-text input-width-300 js-ajax-validate" />
-	  <i class="icon-ok-green validate-ok-field-{$profile_secondname}" style="display: none"></i>
-	  <i class="icon-question-sign js-tip-help" title="{$profile_secondname_notice}"></i>
-	  <small class="validate-error-hide validate-error-field-{$profile_secondname}"></small></p>
-	
-	  {* Опыт работы (выпадающий список) *}
-	  {*
-	    Нет опыта
-	    Небольшой
-	    Большой
-	  *}
-	  {assign var="profile_experience" value='profile_experience'}
-	  {assign var="profile_experience_list" value=$oConfig->get('plugin.fashion.profile_experience')}
-	  {assign var="profile_experience_value" value=$_aRequest.profile_experience}
-	  {assign var="profile_experience_label" value=$aLang.plugin.fashion.profile_experience}
-	  {assign var="profile_experience_notice" value=$aLang.plugin.fashion.profile_experience_notice}
-	  <p><label for="registration-label-{$profile_experience}">{$profile_experience_label}</label>
-	  <select name="{$profile_experience}" id="{$profile_experience}" class="input-width-full js-ajax-validate">
-	    <option value="0">{$profile_experience_label}</option>
-	    {foreach from=$profile_experience_list item=Key}
-	      {assign var="sProfileFieldName" value=$aLang.plugin.fashion.profile_experience_fields.$Key}
-	      <option value="{$Key}" {if $profile_experience_value==$Key}selected{/if}>{$sProfileFieldName|escape:'html'}</option>
-	    {/foreach}
-	  </select>
-	  <i class="icon-ok-green validate-ok-field-{$profile_experience}" style="display: none"></i>
-	  <i class="icon-question-sign js-tip-help" title="{$profile_experience_notice}"></i>
-	  <small class="validate-error-hide validate-error-field-{$profile_experience}"></small></p>
+    {* Имя (текст) *}
+    {assign var="profile_firstname" value='profile_firstname'}
+    {assign var="profile_firstname_request" value=$_aRequest.plugin.fashion.profile_firstname}
+    {assign var="profile_firstname_label" value=$aLang.plugin.fashion.profile_firstname}
+    {assign var="profile_firstname_notice" value=$aLang.plugin.fashion.profile_firstname_notice}
+    <p><label for="registration-{$profile_firstname}">{$profile_firstname_label}</label>
+    <input type="text" name="{$profile_firstname}" id="registration_{$profile_firstname}" value="{$profile_firstname_request}" class="input-text input-width-300 js-ajax-validate" />
+    <i class="icon-ok-green validate-ok-field-{$profile_firstname}" style="display: none"></i>
+    <i class="icon-question-sign js-tip-help" title="{$profile_firstname_notice}"></i>
+    <small class="validate-error-hide validate-error-field-{$profile_firstname}"></small></p>
 
 License
 -------

@@ -27,11 +27,14 @@ class PluginFashion extends Plugin {
   // Наследование
   public $aInherits = array(
       'action' => array(
+        'ActionRegistration' => '_ActionRegistration',
+        'ActionPeople' => '_ActionPeople',
       ),
       'module' => array(
         'ModuleUser' => '_ModuleUser',
       ),
       'mapper' => array(
+        'ModuleUser_MapperUser' => '_ModuleUser_MapperUser',
       ),
       'entity' => array(
         'ModuleUser_EntityUser' => '_ModuleUser_EntityUser',
