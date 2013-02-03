@@ -4,7 +4,7 @@
 {include file="$sTemplatePathPlugin/registrations/forms_js.tpl" ProfileName=$ProfileName}
 
 <form action="{router page="fashion_register/$ProfileName"}" method="post" id="register-form">
-  {hook run='form_registration_begin' isPopup=true}
+  {hook run='form_fashion_register_begin' isPopup=true}
 
   {* Имя (текст) *}
   <p><label for="registration-label-{$profile_firstname}">{$profile_firstname_label}</label>
@@ -64,7 +64,7 @@
   <small class="validate-error-hide validate-error-field-captcha"></small></p>
   {/hookb}
 
-  {hook run='form_registration_end' isPopup=true}
+        {hook run='form_fashion_register_end' isPopup=true}
 
   <input type="hidden" name="profile_type" value="{$ProfileName}">
   <input type="hidden" name="return-path" value="{$PATH_WEB_CURRENT|escape:'html'}">
